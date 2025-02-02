@@ -1,156 +1,439 @@
-/* Reset and basic styling */
+/* ================================= */
+/*          Base & Reset           */
+/* ================================= */
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  
-  body {
-    font-family: 'Arial', sans-serif;
-    line-height: 1.6;
-    background-color: #f4f4f4;
-  }
-  
-  /* Container utility */
-  .container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  /* Header / Navigation styles */
-  .header {
-    background-color: #333;
-    color: #fff;
-    padding: 1rem 0;
-  }
-  
-  .header-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .logo {
-    margin-left: 1rem;
-  }
-  
-  .nav ul {
-    list-style: none;
-    display: flex;
-    margin-right: 1rem;
-  }
-  
-  .nav li {
-    margin-left: 20px;
-  }
-  
-  .nav a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 1rem;
-  }
-  
-  /* Hero Section */
-  .hero {
-    background: url('https://forum.xboxera.com/uploads/default/original/2X/1/13f2199320bb47c3b0658cfe603057b2f0a2b41b.jpeg') no-repeat center center/cover;
-    color: #fff;
-    padding: 100px 0;
-    text-align: center;
-  }
-  
-  .hero-container h2 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-  }
-  
-  .hero-container p {
-    font-size: 1.2rem;
-    margin-bottom: 1.5rem;
-  }
-  
-  .shop-btn {
-    padding: 0.75rem 1.5rem;
-    background-color: #e50914;
-    border: none;
-    color: #fff;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-  }
-  
-  .shop-btn:hover {
-    background-color: #c40710;
-  }
-  
-  /* Featured Games Section */
-  .featured-games {
-    padding: 2rem 0;
-    background-color: #fff;
-  }
-  
-  .featured-games h2 {
-    text-align: center;
-    margin-bottom: 2rem;
-  }
-  
-  .game-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    justify-content: center;
-  }
-  
-  .game-card {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    width: 300px;
-    border-radius: 5px;
-    overflow: hidden;
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-  
-  .game-card:hover {
-    transform: scale(1.03);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  .game-image {
-    width: 100%;
-    height: auto;
-  }
-  
-  .game-details {
-    padding: 1rem;
-    text-align: center;
-  }
-  
-  .price {
-    font-weight: bold;
-    margin: 0.5rem 0;
-  }
-  
-  .add-to-cart-btn {
-    padding: 0.5rem 1rem;
-    background-color: #28a745;
-    border: none;
-    color: #fff;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-  }
-  
-  .add-to-cart-btn:hover {
-    background-color: #218838;
-  }
-  
-  /* Footer */
-  .footer {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 1rem 0;
-    margin-top: 2rem;
-  }
-  
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: 'Open Sans', sans-serif;
+	line-height: 1.6;
+	background-color: #f4f4f4;
+	color: #333;
+}
+
+.container {
+	width: 90%;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 1rem;
+}
+
+/* ================================= */
+/*          Header & Navigation     */
+/* ================================= */
+.header {
+	background: linear-gradient(135deg, #1d1d1d, #333);
+	color: #fff;
+	padding: 1rem 0;
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+}
+
+.header-container {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.logo {
+	font-size: 1.8rem;
+	font-weight: 600;
+	margin-left: 1rem;
+}
+
+.nav ul {
+	list-style: none;
+	display: flex;
+	margin-right: 1rem;
+}
+
+.nav li {
+	margin-left: 1.5rem;
+}
+
+.nav a {
+	color: #fff;
+	text-decoration: none;
+	font-size: 1rem;
+	transition: color 0.3s;
+}
+
+.nav a:hover {
+	color: #e50914;
+}
+
+/* ================================= */
+/*          Banner / Hero           */
+/* ================================= */
+.banner,
+.hero {
+	position: relative;
+	overflow: hidden;
+}
+
+.promo-banner {
+	background-size: cover;
+	background-position: center;
+	height: 400px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+}
+
+.promo-banner::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	/* Reduced overlay opacity for more brightness */
+	background: rgba(0, 0, 0, 0.2);
+}
+
+/* ---------- Updated Promo Content Styling ---------- */
+.promo-content {
+	position: relative;
+	text-align: center;
+	/* Semi-transparent dark background to boost text contrast */
+	background-color: rgba(0, 0, 0, 0.3);
+	color: #fff;
+	padding: 2rem;
+	border-radius: 10px;
+	/* Optional subtle box-shadow for separation */
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.promo-content h1 {
+	font-size: 2.5rem;
+	margin-bottom: 1rem;
+	/* Text shadow enhances legibility */
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.promo-content p {
+	font-size: 1.2rem;
+	margin-bottom: 1.5rem;
+	text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.promo-btn {
+	padding: 0.8rem 2rem;
+	background-color: #e50914;
+	border: none;
+	color: #fff;
+	font-size: 1rem;
+	cursor: pointer;
+	border-radius: 5px;
+	transition: background-color 0.3s, transform 0.3s;
+	/* Subtle text shadow for added clarity */
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.promo-btn:hover {
+	background-color: #c40710;
+	transform: translateY(-3px);
+}
+
+/* Hero (Fallback) */
+.hero {
+	background: url('https://forum.xboxera.com/uploads/default/original/2X/1/13f2199320bb47c3b0658cfe603057b2f0a2b41b.jpeg')
+		no-repeat center center/cover;
+	padding: 100px 0;
+	text-align: center;
+	position: relative;
+}
+
+.hero::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.4);
+}
+
+.hero-container {
+	position: relative;
+	color: #fff;
+}
+
+.hero-container h2 {
+	font-size: 2.8rem;
+	margin-bottom: 1rem;
+	font-weight: 600;
+}
+
+.hero-container p {
+	font-size: 1.3rem;
+	margin-bottom: 1.5rem;
+}
+
+.shop-btn {
+	padding: 0.8rem 2rem;
+	background-color: #e50914;
+	border: none;
+	color: #fff;
+	font-size: 1rem;
+	cursor: pointer;
+	border-radius: 5px;
+	transition: background-color 0.3s, transform 0.3s;
+}
+
+.shop-btn:hover {
+	background-color: #c40710;
+	transform: translateY(-3px);
+}
+
+/* ================================= */
+/*       Recommended / Featured     */
+/* ================================= */
+.featured-games {
+	padding: 3rem 0;
+	background-color: #fff;
+}
+
+.featured-games h2 {
+	text-align: center;
+	margin-bottom: 2rem;
+	font-size: 2rem;
+	color: #333;
+}
+
+.game-grid {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 2rem;
+	justify-content: center;
+}
+
+.game-card {
+	background-color: #fff;
+	border: 1px solid #ddd;
+	width: 300px;
+	border-radius: 10px;
+	overflow: hidden;
+	transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.game-card:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.game-image {
+	width: 100%;
+	height: auto;
+}
+
+.game-details {
+	padding: 1rem;
+	text-align: center;
+}
+
+.game-details h3 {
+	margin-bottom: 0.8rem;
+	font-size: 1.4rem;
+}
+
+.price {
+	font-weight: 600;
+	margin-bottom: 1rem;
+	color: #e50914;
+}
+
+.add-to-cart-btn {
+	padding: 0.6rem 1.2rem;
+	background-color: #28a745;
+	border: none;
+	color: #fff;
+	cursor: pointer;
+	border-radius: 5px;
+	transition: background-color 0.3s, transform 0.3s;
+}
+
+.add-to-cart-btn:hover {
+	background-color: #218838;
+	transform: translateY(-3px);
+}
+
+/* ================================= */
+/*         Popular Categories       */
+/* ================================= */
+.popular-categories {
+	padding: 3rem 0;
+	background-color: #f9f9f9;
+}
+
+.popular-categories h2 {
+	text-align: center;
+	margin-bottom: 2rem;
+	font-size: 2rem;
+	color: #333;
+}
+
+.categories-grid {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1.5rem;
+	justify-content: center;
+}
+
+.category-card {
+	background-color: #fff;
+	border: 1px solid #ddd;
+	padding: 1rem 2rem;
+	border-radius: 10px;
+	font-weight: 600;
+	transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.category-card:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.category-card h3 {
+	font-size: 1.2rem;
+}
+
+/* ================================= */
+/*          Discount Offers         */
+/* ================================= */
+.discount-offers {
+	padding: 3rem 0;
+	background-color: #fff;
+}
+
+.discount-offers h2 {
+	text-align: center;
+	margin-bottom: 2rem;
+	font-size: 2rem;
+	color: #333;
+}
+
+.offers-grid {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1.5rem;
+	justify-content: center;
+}
+
+.offer-card {
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-radius: 10px;
+	overflow: hidden;
+	width: 300px;
+	text-align: center;
+	transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.offer-card:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.offer-card img {
+	width: 100%;
+	height: auto;
+}
+
+.offer-card h3 {
+	margin: 1rem 0;
+	font-size: 1.2rem;
+	color: #333;
+}
+
+.counter {
+	font-size: 1rem;
+	margin-bottom: 1rem;
+	color: #e50914;
+}
+
+.btn {
+	margin-bottom: 1rem;
+	padding: 0.6rem 1.2rem;
+	background-color: #28a745;
+	border: none;
+	color: #fff;
+	cursor: pointer;
+	border-radius: 5px;
+	transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn:hover {
+	background-color: #218838;
+	transform: translateY(-3px);
+}
+
+/* ================================= */
+/*           Testimonials           */
+/* ================================= */
+.testimonials {
+	padding: 3rem 0;
+	background-color: #f9f9f9;
+}
+
+.testimonials h2 {
+	text-align: center;
+	margin-bottom: 2rem;
+	font-size: 2rem;
+	color: #333;
+}
+
+.testimonials-grid {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1.5rem;
+	justify-content: center;
+}
+
+.testimonial-card {
+	background-color: #fff;
+	border: 1px solid #ddd;
+	padding: 1.5rem;
+	border-radius: 10px;
+	width: 300px;
+	text-align: center;
+	transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.testimonial-card:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial-card .comment {
+	font-style: italic;
+	margin-bottom: 1rem;
+	color: #555;
+}
+
+.testimonial-card .user {
+	font-weight: 600;
+	margin-bottom: 0.5rem;
+	color: #333;
+}
+
+.testimonial-card .rating {
+	color: #f39c12;
+}
+
+/* ================================= */
+/*              Footer              */
+/* ================================= */
+.footer {
+	background-color: #1d1d1d;
+	color: #fff;
+	text-align: center;
+	padding: 1.5rem 0;
+	margin-top: 2rem;
+	font-size: 0.9rem;
+}
