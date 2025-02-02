@@ -65,22 +65,29 @@ body {
 .nav a:hover {
 	color: #e50914;
 }
-
+/* Optional: Remove default link styling from the logo */
+.logo-link {
+	text-decoration: none;
+	color: inherit;
+  }
+  
 /* ================================= */
 /*       Cart Icon in Navbar        */
 /* ================================= */
+
+/* Cart Icon in Navbar */
 .nav ul li.cart-icon {
 	position: relative;
 	margin-left: 1.5rem;
-}
-
-.nav ul li.cart-icon a {
-	font-size: 1.5rem;
+  }
+  
+  .nav ul li.cart-icon a {
+	font-size: 1.8rem; /* Adjust the icon size as needed */
 	display: inline-block;
 	position: relative;
-}
-
-.cart-badge {
+  }
+  
+  .cart-badge {
 	position: absolute;
 	top: -5px;
 	right: -10px;
@@ -90,7 +97,7 @@ body {
 	padding: 2px 6px;
 	font-size: 0.75rem;
 	font-weight: bold;
-}
+  }
 
 /* ================================= */
 /*          Banner / Hero           */

@@ -1,18 +1,21 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { FaShoppingCart } from "react-icons/fa"; // Using react-icons for the cart icon
 import { Context } from "../store/appContext";
-import "../../styles/home.css"; // Or import a dedicated navbar CSS file if preferred
+import "../../styles/home.css"; // Or use a dedicated navbar CSS file if preferred
 
 export const Navbar = () => {
-  // Get the global state from context.
-  // It is assumed that "cartItems" is stored in the context.
+  // Get the global state from context. It's assumed "cartItems" is stored in the context.
   const { store } = useContext(Context);
   const cartCount = store.cartItems ? store.cartItems.length : 0;
 
   return (
     <header className="header">
       <div className="container header-container">
-        <h1 className="logo">Video Game Store</h1>
+        {/* The logo is now wrapped in a Link so it acts as a button redirecting to Home */}
+        <Link to="/" className="logo-link">
+          <h1 className="logo">Video Game Store</h1>
+        </Link>
         <nav className="nav">
           <ul>
             <li>
@@ -30,8 +33,7 @@ export const Navbar = () => {
             {/* Cart Icon with Badge */}
             <li className="cart-icon">
               <Link to="/cart">
-                {/* You can replace this emoji with an icon from a library like FontAwesome */}
-                🛒
+                <FaShoppingCart />
                 {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
               </Link>
             </li>
