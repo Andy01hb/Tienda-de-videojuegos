@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 
@@ -131,29 +132,6 @@ export const Home = () => {
 	// =====================================================
 	return (
 		<div className="home">
-			{/* Header / Navigation */}
-			<header className="header">
-				<div className="container header-container">
-					<h1 className="logo">Video Game Store</h1>
-					<nav className="nav">
-						<ul>
-							<li>
-								<a href="#home">Home</a>
-							</li>
-							<li>
-								<a href="#games">Games</a>
-							</li>
-							<li>
-								<a href="#about">About</a>
-							</li>
-							<li>
-								<a href="#contact">Contact</a>
-							</li>
-						</ul>
-					</nav>
-				</div>
-			</header>
-
 			{/* Banner / Hero Section (using promotion if available) */}
 			{featuredPromotions.length > 0 ? (
 				<section className="banner">
@@ -176,7 +154,8 @@ export const Home = () => {
 					<div className="container hero-container">
 						<h2>Welcome to the Ultimate Video Game Store!</h2>
 						<p>
-							Discover your next adventure among our latest game releases.
+							Discover your next adventure among our latest game
+							releases.
 						</p>
 						<button className="shop-btn">Shop Now</button>
 					</div>
@@ -252,15 +231,6 @@ export const Home = () => {
 					</div>
 				</div>
 			</section>
-
-			{/* Footer */}
-			<footer className="footer">
-				<div className="container">
-					<p>
-						&copy; {new Date().getFullYear()} Video Game Store. All rights reserved.
-					</p>
-				</div>
-			</footer>
 		</div>
 	);
 };
