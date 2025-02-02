@@ -1,7 +1,156 @@
-/*
-    home.css: This website contains selectors only used in home.css
-
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+/* Reset and basic styling */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+  }
+  
+  /* Container utility */
+  .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  /* Header / Navigation styles */
+  .header {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem 0;
+  }
+  
+  .header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .logo {
+    margin-left: 1rem;
+  }
+  
+  .nav ul {
+    list-style: none;
+    display: flex;
+    margin-right: 1rem;
+  }
+  
+  .nav li {
+    margin-left: 20px;
+  }
+  
+  .nav a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+  }
+  
+  /* Hero Section */
+  .hero {
+    background: url('https://forum.xboxera.com/uploads/default/original/2X/1/13f2199320bb47c3b0658cfe603057b2f0a2b41b.jpeg') no-repeat center center/cover;
+    color: #fff;
+    padding: 100px 0;
+    text-align: center;
+  }
+  
+  .hero-container h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .hero-container p {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .shop-btn {
+    padding: 0.75rem 1.5rem;
+    background-color: #e50914;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .shop-btn:hover {
+    background-color: #c40710;
+  }
+  
+  /* Featured Games Section */
+  .featured-games {
+    padding: 2rem 0;
+    background-color: #fff;
+  }
+  
+  .featured-games h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .game-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+  }
+  
+  .game-card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    width: 300px;
+    border-radius: 5px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .game-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .game-image {
+    width: 100%;
+    height: auto;
+  }
+  
+  .game-details {
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  .price {
+    font-weight: bold;
+    margin: 0.5rem 0;
+  }
+  
+  .add-to-cart-btn {
+    padding: 0.5rem 1rem;
+    background-color: #28a745;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .add-to-cart-btn:hover {
+    background-color: #218838;
+  }
+  
+  /* Footer */
+  .footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+    margin-top: 2rem;
+  }
+  
