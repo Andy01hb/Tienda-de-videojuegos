@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from "react"; 
 import { Link, useNavigate } from "react-router-dom";
 import "../../styles/cart.css";
 
@@ -19,7 +19,7 @@ const Cart = () => {
       price: 49.99,
       quantity: 2,
       imageUrl:
-        "https://store-images.s-microsoft.com/image/apps.58021.69011092827716296.e9190db7-6f4c-478c-8555-3edad4336a39.de8bb314-af23-4670-9343-fa78251591c8?q=90&w=480&h=270",
+        "https://wpassets.halowaypoint.com/wp-content/2022/02/Halo-Infinite-Chief-Weapon-scaled.jpg",
     },
   ]);
 
@@ -106,9 +106,7 @@ const Cart = () => {
                         }
                       />
                     </td>
-                    <td>
-                      ${(item.price * item.quantity).toFixed(2)}
-                    </td>
+                    <td>${(item.price * item.quantity).toFixed(2)}</td>
                     <td>
                       <button onClick={() => removeItem(item.id)}>
                         Eliminar
