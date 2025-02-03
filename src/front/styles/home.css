@@ -49,6 +49,7 @@ body {
 	list-style: none;
 	display: flex;
 	margin-right: 1rem;
+	font-size: 25px;
 }
 
 .nav li {
@@ -470,3 +471,15 @@ body {
 	margin-top: 2rem;
 	font-size: 0.9rem;
 }
+/* Profile Icon in Navbar */
+.nav ul li.profile-icon {
+	position: relative;
+	margin-left: 1.5rem;
+  }
+  
+  .nav ul li.profile-icon a {
+	font-size: 1.8rem; /* Adjust size as needed */
+	display: inline-block;
+	position: relative;
+  }
+  

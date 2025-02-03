@@ -1,0 +1,115 @@
+/* ================================= */
+/*         Base Styling for Checkout */
+/* ================================= */
+.checkout-page {
+    padding: 2rem 0;
+    background-color: #f4f4f4;
+    color: #333;
+  }
+  .checkout-page .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  .checkout-page h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 2.5rem;
+  }
+  
+  /* ================================= */
+  /*           Checkout Form          */
+  /* ================================= */
+  .checkout-form {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+  .checkout-form input[type="text"],
+  .checkout-form input[type="email"],
+  .checkout-form input[type="password"] {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  .payment-option {
+    margin-bottom: 1.5rem;
+  }
+  .payment-option label {
+    margin-right: 1rem;
+    font-weight: 600;
+  }
+  .account-fields,
+  .guest-fields {
+    margin-bottom: 1.5rem;
+  }
+  .payment-method {
+    margin-bottom: 1.5rem;
+  }
+  .payment-method h3 {
+    margin-bottom: 0.5rem;
+  }
+  .payment-method label {
+    margin-right: 1rem;
+    font-weight: 600;
+  }
+  .summary {
+    margin-bottom: 1.5rem;
+    text-align: right;
+  }
+  .summary h3 {
+    margin-bottom: 0.5rem;
+  }
+  .confirm-btn {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #28a745;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  .confirm-btn:hover {
+    background-color: #218838;
+    transform: translateY(-3px);
+  }
+  
+  /* ================================= */
+  /*         Confirmation Message     */
+  /* ================================= */
+  .confirmation {
+    text-align: center;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+  .confirmation h2 {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+  }
+  .confirmation p {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+  }
+  .home-btn {
+    padding: 0.8rem 2rem;
+    background-color: #e50914;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  .home-btn:hover {
+    background-color: #c40710;
+    transform: translateY(-3px);
+  }
+  

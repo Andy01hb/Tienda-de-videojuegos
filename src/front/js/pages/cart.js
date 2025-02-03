@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../../styles/cart.css";
 
 const Cart = () => {
@@ -26,6 +26,9 @@ const Cart = () => {
   const [coupon, setCoupon] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState(null);
 
+  // Hook to navigate between routes
+  const navigate = useNavigate();
+
   // Update the quantity of an item
   const updateQuantity = (id, newQuantity) => {
     setCartItems(
@@ -46,7 +49,7 @@ const Cart = () => {
     0
   );
 
-  // For demonstration, let’s say coupon "SAVE10" gives 10% off the subtotal
+  // For demonstration, coupon "SAVE10" gives 10% off the subtotal
   const discount = appliedCoupon === "SAVE10" ? subtotal * 0.1 : 0;
   const total = subtotal - discount;
 
@@ -57,6 +60,11 @@ const Cart = () => {
       alert("Código de cupón inválido");
       setAppliedCoupon(null);
     }
+  };
+
+  // Navigate to checkout page when the checkout button is clicked
+  const proceedToCheckout = () => {
+    navigate("/checkout");
   };
 
   return (
@@ -99,8 +107,7 @@ const Cart = () => {
                       />
                     </td>
                     <td>
-                      $
-                      {(item.price * item.quantity).toFixed(2)}
+                      ${(item.price * item.quantity).toFixed(2)}
                     </td>
                     <td>
                       <button onClick={() => removeItem(item.id)}>
@@ -131,11 +138,11 @@ const Cart = () => {
             {/* Summary Section */}
             <div className="summary">
               <p>Subtotal: ${subtotal.toFixed(2)}</p>
-              {appliedCoupon && (
-                <p>Descuento: -${discount.toFixed(2)}</p>
-              )}
+              {appliedCoupon && <p>Descuento: -${discount.toFixed(2)}</p>}
               <h2>Total: ${total.toFixed(2)}</h2>
-              <button className="checkout-btn">Proceder al Pago</button>
+              <button className="checkout-btn" onClick={proceedToCheckout}>
+                Proceder al Pago
+              </button>
             </div>
           </>
         )}
