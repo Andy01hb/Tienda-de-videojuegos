@@ -1,0 +1,125 @@
+/* ================================= */
+/*         Base Styling for About   */
+/* ================================= */
+.about-page {
+    padding: 2rem 0;
+    background-color: #f4f4f4;
+    color: #333;
+  }
+  
+  .about-page .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  /* Header */
+  .about-header h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2.8rem;
+    font-weight: 600;
+  }
+  
+  /* Historia */
+  .about-history h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 0.5rem;
+  }
+  .about-history p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+  
+  /* Misión y Visión */
+  .about-mission-vision {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  .about-mission-vision .mission,
+  .about-mission-vision .vision {
+    flex: 1 1 45%;
+  }
+  .about-mission-vision h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+  .about-mission-vision p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  
+  /* Qué nos hace únicos */
+  .about-unique h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  .about-unique ul {
+    list-style: disc;
+    padding-left: 1.5rem;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+  
+  /* Testimonios */
+  .about-testimonials h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  .testimonials {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .testimonials blockquote {
+    font-style: italic;
+    background: #fff;
+    padding: 1rem;
+    border-left: 4px solid #e50914;
+    border-radius: 4px;
+  }
+  .testimonials cite {
+    display: block;
+    text-align: right;
+    margin-top: 0.5rem;
+    font-weight: bold;
+  }
+  
+  /* Media (Video) */
+  .about-media h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  .about-video {
+    width: 100%;
+    max-width: 600px;
+    display: block;
+    margin: 0 auto 2rem;
+  }
+  
+  /* CTA */
+  .cta {
+    text-align: center;
+  }
+  .cta-btn {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background-color: #e50914;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  .cta-btn:hover {
+    background-color: #c40710;
+    transform: translateY(-3px);
+  }
+  
