@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { FaShoppingCart, FaUser, FaBars, FaTimes } from "react-icons/fa"; // Icons
+import { FaShoppingCart, FaUser, FaBars, FaTimes, FaRegHeart } from "react-icons/fa"; // Se agrega FaRegHeart para el corazón
 import { Context } from "../store/appContext";
 import "../../styles/home.css"; 
 
@@ -30,7 +30,7 @@ export const Navbar = () => {
           {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
         </div>
         <Link to="/" className="logo-link" onClick={closeMobileMenu}>
-          <h1 className="logo">Video Game Store</h1>
+          <h1 className="logo">Andy's Games</h1>
         </Link>
         <nav className={`nav ${isMobileMenuOpen ? "active" : ""}`}>
           <ul>
@@ -68,6 +68,12 @@ export const Navbar = () => {
                   )}
                 </div>
               )}
+            </li>
+            {/* Nuevo ícono de wishlist */}
+            <li className="wishlist-icon">
+              <Link to="/wishlist" onClick={closeMobileMenu}>
+                <FaRegHeart />
+              </Link>
             </li>
             <li className="cart-icon">
               <Link to="/cart" onClick={closeMobileMenu}>

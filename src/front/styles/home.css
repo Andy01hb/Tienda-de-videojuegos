@@ -751,4 +751,33 @@
 	background-color: #f4f4f4;
   }
   
+  /* In profile.css, add these styles at the bottom */
+
+.logout-btn {
+	background-color: #d9534f;
+	color: #fff;
+	border: none;
+	padding: 0.6rem 1.2rem;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	margin-bottom: 1rem;
+  }
+  
+  .logout-btn:hover {
+	background-color: #c9302c;
+  }
+  
+  /* Estilos para el ícono de wishlist */
+.nav ul li.wishlist-icon {
+	margin-left: 1.5rem;
+  }
+  
+  .nav ul li.wishlist-icon a {
+	font-size: 1.8rem; /* Ajusta el tamaño según necesites */
+	color: #fff;       /* Asegura que el color sea blanco */
+  }
+
+
+
   

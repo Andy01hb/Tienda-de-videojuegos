@@ -13,7 +13,8 @@ import { Contact } from "./pages/contact";
 import Cart from "./pages/cart";
 import Checkout from "./pages/checkout";
 import { Register } from "./pages/register";
-import { Login } from "./pages/login"; // NEW: Import the Login page
+import { Login } from "./pages/login";
+import Wishlist from "./pages/wishlist"; // Nuevo componente Wishlist
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -39,7 +40,8 @@ const Layout = () => {
             <Route element={<About />} path="/about" />
             <Route element={<Contact />} path="/contact" />
             <Route element={<Register />} path="/register" />
-            <Route element={<Login />} path="/login" /> {/* NEW */}
+            <Route element={<Login />} path="/login" />
+            <Route element={<Wishlist />} path="/wishlist" /> {/* Nueva ruta */}
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           <Footer />

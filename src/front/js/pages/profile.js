@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom";
 import "../../styles/profile.css";
 
 export const Profile = () => {
   const { store, actions } = useContext(Context);
+  const navigate = useNavigate();
 
-  // UPDATED: Use backend data for purchase history and library instead of dummy data
-  // Previously, dummy data was used here.
+  // NEW: Local state for purchase history and library from the backend
   const [purchaseHistory, setPurchaseHistory] = useState([]);
   const [library, setLibrary] = useState([]);
 
@@ -33,7 +34,7 @@ export const Profile = () => {
     fetchWishlist();
   }, [store.token, actions]);
 
-  // NEW: Fetch purchase history (orders) and library from the backend when the component mounts or when store.token changes
+  // Fetch purchase history (orders) and library from the backend when the component mounts or when store.token changes
   useEffect(() => {
     const fetchOrdersAndLibrary = async () => {
       if (store.token) {
@@ -67,10 +68,20 @@ export const Profile = () => {
     }
   };
 
+  // NEW: Handler to log out the user
+  const handleLogout = () => {
+    actions.logoutUser();
+    navigate("/login");
+  };
+
   return (
     <div className="profile-page">
       <div className="container">
         <h1>Perfil de Usuario</h1>
+        {/* NEW: Logout Button */}
+        <button onClick={handleLogout} className="logout-btn">
+          Log Out
+        </button>
 
         {/* Historial de Compras */}
         <section className="purchase-history">

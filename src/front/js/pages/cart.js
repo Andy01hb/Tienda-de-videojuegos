@@ -1,55 +1,27 @@
-import React, { useState } from "react"; 
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext";
 import "../../styles/cart.css";
 
 const Cart = () => {
-  // Dummy cart items (in a real app these would be managed globally)
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      title: "The Legend of React",
-      price: 59.99,
-      quantity: 1,
-      imageUrl:
-        "https://wpassets.halowaypoint.com/wp-content/2022/02/Halo-Infinite-Chief-Weapon-scaled.jpg",
-    },
-    {
-      id: 2,
-      title: "React Racing",
-      price: 49.99,
-      quantity: 2,
-      imageUrl:
-        "https://wpassets.halowaypoint.com/wp-content/2022/02/Halo-Infinite-Chief-Weapon-scaled.jpg",
-    },
-  ]);
-
+  const { store, actions } = useContext(Context);
+  const cartItems = store.cartItems;
   const [coupon, setCoupon] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState(null);
-
-  // Hook to navigate between routes
   const navigate = useNavigate();
 
-  // Update the quantity of an item
   const updateQuantity = (id, newQuantity) => {
-    setCartItems(
-      cartItems.map((item) =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
-      )
-    );
+    actions.updateCartItem(id, newQuantity);
   };
 
-  // Remove an item from the cart
   const removeItem = (id) => {
-    setCartItems(cartItems.filter((item) => item.id !== id));
+    actions.removeFromCart(id);
   };
 
-  // Calculate subtotal
   const subtotal = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
-
-  // For demonstration, coupon "SAVE10" gives 10% off the subtotal
   const discount = appliedCoupon === "SAVE10" ? subtotal * 0.1 : 0;
   const total = subtotal - discount;
 
@@ -62,7 +34,6 @@ const Cart = () => {
     }
   };
 
-  // Navigate to checkout page when the checkout button is clicked
   const proceedToCheckout = () => {
     navigate("/checkout");
   };
@@ -73,8 +44,7 @@ const Cart = () => {
         <h1>Carrito de Compras</h1>
         {cartItems.length === 0 ? (
           <p>
-            Tu carrito está vacío.{" "}
-            <Link to="/gamelist">Ver juegos</Link>
+            Tu carrito está vacío. <Link to="/gamelist">Ver juegos</Link>
           </p>
         ) : (
           <>
@@ -92,7 +62,10 @@ const Cart = () => {
                 {cartItems.map((item) => (
                   <tr key={item.id}>
                     <td>
-                      <img src={item.imageUrl} alt={item.title} />
+                      <img
+                        src={item.image_url || item.imageUrl || "https://via.placeholder.com/150"}
+                        alt={item.title}
+                      />
                       <span>{item.title}</span>
                     </td>
                     <td>${item.price.toFixed(2)}</td>
@@ -101,23 +74,17 @@ const Cart = () => {
                         type="number"
                         value={item.quantity}
                         min="1"
-                        onChange={(e) =>
-                          updateQuantity(item.id, parseInt(e.target.value))
-                        }
+                        onChange={(e) => updateQuantity(item.id, parseInt(e.target.value))}
                       />
                     </td>
                     <td>${(item.price * item.quantity).toFixed(2)}</td>
                     <td>
-                      <button onClick={() => removeItem(item.id)}>
-                        Eliminar
-                      </button>
+                      <button onClick={() => removeItem(item.id)}>Eliminar</button>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
-
-            {/* Coupon Section */}
             <div className="coupon-section">
               <input
                 type="text"
@@ -132,8 +99,6 @@ const Cart = () => {
                 </p>
               )}
             </div>
-
-            {/* Summary Section */}
             <div className="summary">
               <p>Subtotal: ${subtotal.toFixed(2)}</p>
               {appliedCoupon && <p>Descuento: -${discount.toFixed(2)}</p>}

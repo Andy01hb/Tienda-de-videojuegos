@@ -1,43 +1,59 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
+import { FaRegHeart, FaHeart } from "react-icons/fa"; // Íconos de corazón vacío y relleno
 import "../../styles/home.css";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
-
-  // Local state for dynamic home page sections
   const [promotions, setPromotions] = useState([]);
   const [discountOffers, setDiscountOffers] = useState([]);
   const [testimonials, setTestimonials] = useState([]);
+  // Estado local para mapear los IDs de productos a los IDs de wishlist
+  const [wishlistMap, setWishlistMap] = useState({});
 
-  // Fetch recommended games from global products.
-  // We assume actions.getProducts() has been called elsewhere or we can call it here.
   useEffect(() => {
     if (store.products.length === 0) {
       actions.getProducts();
     }
-    // Fetch dynamic home page data
     const fetchHomeData = async () => {
       const promos = await actions.getPromotions();
       if (promos) setPromotions(promos);
-
       const discounts = await actions.getDiscountOffers();
       if (discounts) setDiscountOffers(discounts);
-
       const testis = await actions.getTestimonials();
       if (testis) setTestimonials(testis);
     };
     fetchHomeData();
   }, [store.products, actions]);
 
-  // Derive recommended games and popular categories from products
+  // Al montar, obtenemos la wishlist del backend para actualizar el estado local
+  useEffect(() => {
+    const fetchWishlist = async () => {
+      if (store.token) {
+        const wishlistData = await actions.getWishlist();
+        if (wishlistData && Array.isArray(wishlistData)) {
+          const map = {};
+          wishlistData.forEach((item) => {
+            if (item.product && item.product.id) {
+              map[item.product.id] = item.id;
+            }
+          });
+          setWishlistMap(map);
+        }
+      }
+    };
+    fetchWishlist();
+  }, [store.token, actions]);
+
+  // Se muestran los juegos recomendados; se limita a 3 productos.
   const recommendedGames = store.products;
+  const recommendedGamesToShow = recommendedGames.slice(0, 3);
+
   const popularCategories = Array.from(
     new Set(store.products.map((product) => product.category).filter(Boolean))
   ).map((cat, index) => ({ id: index, name: cat }));
 
-  // LimitedOfferCounter Component for Countdown Timer (same as before)
+  // Componente contador para ofertas con tiempo límite
   const LimitedOfferCounter = ({ expiresAt }) => {
     const calculateTimeLeft = () => {
       const difference = +new Date(expiresAt) - +new Date();
@@ -53,7 +69,6 @@ export const Home = () => {
     };
 
     const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
-
     useEffect(() => {
       const timer = setInterval(() => {
         setTimeLeft(calculateTimeLeft());
@@ -77,9 +92,34 @@ export const Home = () => {
     );
   };
 
+  // Función para agregar un juego al carrito
+  const handleAddToCart = (product) => {
+    actions.addToCart(product, 1);
+  };
+
+  // Función toggle para la wishlist: si ya está agregado se elimina, de lo contrario se agrega.
+  const toggleWishlist = async (product) => {
+    if (wishlistMap[product.id]) {
+      // El producto ya está en la wishlist, se elimina
+      const wishlistItemId = wishlistMap[product.id];
+      const result = await actions.removeFromWishlist(wishlistItemId);
+      if (result) {
+        const newMap = { ...wishlistMap };
+        delete newMap[product.id];
+        setWishlistMap(newMap);
+      }
+    } else {
+      // El producto no está en la wishlist, se agrega
+      const result = await actions.addToWishlist(product.id);
+      if (result && result.id) {
+        setWishlistMap({ ...wishlistMap, [product.id]: result.id });
+      }
+    }
+  };
+
   return (
     <div className="home">
-      {/* Banner / Hero Section using dynamic promotions if available */}
+      {/* Sección Banner / Hero con promociones dinámicas */}
       {promotions.length > 0 ? (
         <section className="banner">
           {promotions.map((promo) => (
@@ -100,31 +140,36 @@ export const Home = () => {
         <section className="hero">
           <div className="container hero-container">
             <h2>Welcome to the Ultimate Video Game Store!</h2>
-            <p>
-              Discover your next adventure among our latest game releases.
-            </p>
+            <p>Discover your next adventure among our latest game releases.</p>
             <button className="shop-btn">Shop Now</button>
           </div>
         </section>
       )}
 
-      {/* Recommended Games Section */}
+      {/* Sección de Juegos Recomendados (solo 3 productos) */}
       <section id="games" className="featured-games">
         <div className="container">
           <h2>Juegos Recomendados</h2>
           <div className="game-grid">
-            {recommendedGames.length > 0 ? (
-              recommendedGames.map((game) => (
-                <div key={game.id} className="game-card">
+            {recommendedGamesToShow.length > 0 ? (
+              recommendedGamesToShow.map((product) => (
+                <div key={product.id} className="game-card">
                   <img
-                    src={game.image_url || "https://via.placeholder.com/150"}
-                    alt={game.title}
+                    src={product.image_url || "https://via.placeholder.com/150"}
+                    alt={product.title}
                     className="game-image"
                   />
                   <div className="game-details">
-                    <h3>{game.title}</h3>
-                    <p className="price">${game.price.toFixed(2)}</p>
-                    <button className="add-to-cart-btn">Add to Cart</button>
+                    <h3>{product.title}</h3>
+                    <p className="price">${product.price.toFixed(2)}</p>
+                    <div className="actions">
+                      <button className="add-to-cart-btn" onClick={() => handleAddToCart(product)}>
+                        Add to Cart
+                      </button>
+                      <button className="wishlist-btn" onClick={() => toggleWishlist(product)}>
+                        {wishlistMap[product.id] ? <FaHeart /> : <FaRegHeart />}
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))
@@ -135,7 +180,7 @@ export const Home = () => {
         </div>
       </section>
 
-      {/* Popular Categories Section */}
+      {/* Sección de Categorías Populares */}
       <section className="popular-categories">
         <div className="container">
           <h2>Categorías Populares</h2>
@@ -149,7 +194,7 @@ export const Home = () => {
         </div>
       </section>
 
-      {/* Discount Offers Section */}
+      {/* Sección de Ofertas con Descuento */}
       <section className="discount-offers">
         <div className="container">
           <h2>Descuentos y Ofertas</h2>
@@ -170,7 +215,7 @@ export const Home = () => {
         </div>
       </section>
 
-      {/* Testimonials Section */}
+      {/* Sección de Testimonios */}
       <section className="testimonials">
         <div className="container">
           <h2>Testimonios</h2>

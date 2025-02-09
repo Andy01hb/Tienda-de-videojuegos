@@ -14,13 +14,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 					initial: "white"
 				}
 			],
-			// Global state for products, user, and token
+			// Global state para productos, usuario, token, carrito y wishlist (aunque la wishlist se consultará desde el backend)
 			products: [],
 			user: null,
-			token: null
+			token: null,
+			cartItems: []
 		},
 		actions: {
-			// Use getActions to call a function within a function
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
@@ -90,6 +90,43 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			addToWishlist: async (productId) => {
+				try {
+					const store = getStore();
+					const resp = await fetch(process.env.BACKEND_URL + "/api/wishlist", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": `Bearer ${store.token}`
+						},
+						body: JSON.stringify({ product_id: productId })
+					});
+					if (!resp.ok) throw new Error("Failed to add product to wishlist");
+					const data = await resp.json();
+					return data;
+				} catch (error) {
+					console.error("Error adding to wishlist", error);
+				}
+			},
+
+			removeFromWishlist: async (wishlistId) => {
+				try {
+					const store = getStore();
+					const resp = await fetch(`${process.env.BACKEND_URL}/api/wishlist/${wishlistId}`, {
+						method: "DELETE",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": `Bearer ${store.token}`
+						}
+					});
+					if (!resp.ok) throw new Error("Failed to remove item from wishlist");
+					const data = await resp.json();
+					return data;
+				} catch (error) {
+					console.error("Error removing from wishlist", error);
+				}
+			},
+
 			updateUser: async (updatedData) => {
 				try {
 					const store = getStore();
@@ -110,7 +147,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			// NEW: Action to fetch purchase history (orders) from the backend
 			getOrders: async () => {
 				try {
 					const store = getStore();
@@ -128,7 +164,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			// NEW: Action to fetch the user's library (purchased games) from the backend
 			getLibrary: async () => {
 				try {
 					const store = getStore();
@@ -146,7 +181,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			// NEW: Action to fetch featured promotions for the home page
 			getPromotions: async () => {
 				try {
 					const resp = await fetch(process.env.BACKEND_URL + "/api/home/promotions");
@@ -158,7 +192,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			// NEW: Action to fetch testimonials for the home page
 			getTestimonials: async () => {
 				try {
 					const resp = await fetch(process.env.BACKEND_URL + "/api/home/testimonials");
@@ -170,7 +203,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			// NEW: Action to fetch discount offers for the home page
 			getDiscountOffers: async () => {
 				try {
 					const resp = await fetch(process.env.BACKEND_URL + "/api/home/discounts");
@@ -182,7 +214,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			// NEW: Action to register a new user (optional: you can also call the endpoint directly in your Register page)
 			registerUser: async (email, password) => {
 				try {
 					const resp = await fetch(process.env.BACKEND_URL + "/api/auth/register", {
@@ -200,6 +231,41 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error registering user", error);
 					throw error;
 				}
+			},
+
+			logoutUser: () => {
+				setStore({ user: null, token: null });
+			},
+
+			addToCart: (product, quantity = 1) => {
+				const store = getStore();
+				const existingItem = store.cartItems.find(item => item.id === product.id);
+				if (existingItem) {
+					const updatedCart = store.cartItems.map(item =>
+						item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item
+					);
+					setStore({ cartItems: updatedCart });
+				} else {
+					setStore({ cartItems: [...store.cartItems, { ...product, quantity }] });
+				}
+			},
+
+			updateCartItem: (id, newQuantity) => {
+				const store = getStore();
+				const updatedCart = store.cartItems.map(item =>
+					item.id === id ? { ...item, quantity: newQuantity } : item
+				);
+				setStore({ cartItems: updatedCart });
+			},
+
+			removeFromCart: (id) => {
+				const store = getStore();
+				const updatedCart = store.cartItems.filter(item => item.id !== id);
+				setStore({ cartItems: updatedCart });
+			},
+
+			clearCart: () => {
+				setStore({ cartItems: [] });
 			}
 		}
 	};
