@@ -1,5 +1,5 @@
-import click
-from api.models import db, User, Product
+import click 
+from api.models import db, User, Product, Order, OrderItem, Wishlist
 
 def setup_commands(app):
     @app.cli.command("insert-test-users")
@@ -14,8 +14,7 @@ def setup_commands(app):
                 role="client"
             )
             db.session.add(user)
-            db.session.commit()
-            print("User:", user.email, "created.")
+        db.session.commit()
         print("All test users created")
 
     @app.cli.command("insert-test-products")
@@ -32,6 +31,52 @@ def setup_commands(app):
                 image_url="https://via.placeholder.com/300x200?text=Test+Game"
             )
             db.session.add(product)
-            db.session.commit()
-            print("Product:", product.title, "created.")
+        db.session.commit()
         print("All test products created")
+
+    @app.cli.command("insert-test-orders")
+    @click.argument("count")
+    def insert_test_orders(count):
+        print("Creating test orders")
+        users = User.query.all()
+        products = Product.query.all()
+        for x in range(1, int(count) + 1):
+            if users and products:
+                user = users[x % len(users)]
+                order = Order(
+                    user_id=user.id,
+                    total=0
+                )
+                db.session.add(order)
+                db.session.commit()
+                total = 0
+                for product in products[:3]:  # Add first 3 products to order
+                    order_item = OrderItem(
+                        order_id=order.id,
+                        product_id=product.id,
+                        quantity=1,
+                        price=product.price
+                    )
+                    db.session.add(order_item)
+                    total += product.price
+                order.total = total
+                db.session.commit()
+                print(f"Order {order.id} created for user {user.email}.")
+        print("All test orders created")
+
+    @app.cli.command("insert-test-wishlist")
+    @click.argument("count")
+    def insert_test_wishlist(count):
+        print("Creating test wishlists")
+        users = User.query.all()
+        products = Product.query.all()
+        for user in users:
+            for product in products[:int(count)]:
+                wishlist_item = Wishlist(
+                    user_id=user.id,
+                    product_id=product.id
+                )
+                db.session.add(wishlist_item)
+            db.session.commit()
+            print(f"Wishlist created for user {user.email}.")
+        print("All test wishlists created")

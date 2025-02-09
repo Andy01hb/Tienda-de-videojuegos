@@ -24,6 +24,63 @@
   /* ================================= */
   /*          Header & Navigation     */
   /* ================================= */
+
+  /* navbar.css */
+
+/* Container for the profile dropdown */
+.profile-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* The profile button (icon) */
+.profile-dropdown .profile-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;  /* Adjusted size for a better fit */
+  color: inherit;
+}
+
+/* Dropdown menu container */
+.profile-dropdown .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  min-width: 120px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+}
+
+/* Each dropdown menu item */
+.profile-dropdown .dropdown-menu li {
+  font-size: 0.85rem; /* Smaller font size */
+  padding: 8px 12px;
+  border-bottom: 1px solid #eee;
+}
+
+/* Remove border on the last item */
+.profile-dropdown .dropdown-menu li:last-child {
+  border-bottom: none;
+}
+
+/* Links inside dropdown items */
+.profile-dropdown .dropdown-menu li a {
+  text-decoration: none;
+  color: #333;
+}
+
+/* Hover effect for dropdown items */
+.profile-dropdown .dropdown-menu li:hover {
+  background-color: #f4f4f4;
+}
+
   .header {
 	background: linear-gradient(135deg, #1d1d1d, #333);
 	color: #fff;
@@ -636,6 +693,62 @@
 	.mobile-menu-icon {
 	  display: none;
 	}
+  }
+  
+  /* -------------------------------- */
+/*   Updated Profile Dropdown       */
+/* -------------------------------- */
+.profile-dropdown {
+	position: relative;
+	display: inline-block;
+  }
+  
+  /* The profile button (icon) inside the dropdown */
+  .profile-dropdown .profile-btn {
+	background: none;
+	border: none;
+	cursor: pointer;
+	font-size: 1rem;  /* You can adjust this if needed */
+	color: inherit;
+  }
+  
+  /* Dropdown menu container */
+  .profile-dropdown .dropdown-menu {
+	position: absolute;
+	top: 110%; /* A bit below the button */
+	right: 0;
+	background-color: #fff;
+	min-width: 100px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+	z-index: 1000;
+  }
+  
+  /* Each dropdown menu item */
+  .profile-dropdown .dropdown-menu li {
+	font-size: 0.75rem; /* Smaller font size for the dropdown items */
+	padding: 6px 10px;
+	border-bottom: 1px solid #eee;
+  }
+  
+  /* Remove border on the last item */
+  .profile-dropdown .dropdown-menu li:last-child {
+	border-bottom: none;
+  }
+  
+  /* Links inside dropdown items */
+  .profile-dropdown .dropdown-menu li a {
+	text-decoration: none;
+	color: #333;
+  }
+  
+  /* Hover effect for dropdown items */
+  .profile-dropdown .dropdown-menu li:hover {
+	background-color: #f4f4f4;
   }
   
   

@@ -1,38 +1,37 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { FaShoppingCart, FaUser, FaBars, FaTimes } from "react-icons/fa"; // Íconos necesarios
+import { FaShoppingCart, FaUser, FaBars, FaTimes } from "react-icons/fa"; // Icons
 import { Context } from "../store/appContext";
-import "../../styles/home.css"; // O un archivo CSS dedicado al navbar
+import "../../styles/home.css"; 
 
 export const Navbar = () => {
-  // Accedemos al estado global; se asume que store.cartItems existe
   const { store } = useContext(Context);
   const cartCount = store.cartItems ? store.cartItems.length : 0;
-
-  // Estado para controlar la visibilidad del menú móvil
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [showProfileOptions, setShowProfileOptions] = useState(false);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  // Esta función cierra el menú móvil al hacer clic en algún enlace
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
+    setShowProfileOptions(false);
+  };
+
+  const toggleProfileOptions = () => {
+    setShowProfileOptions(!showProfileOptions);
   };
 
   return (
     <header className="header">
       <div className="container header-container">
-        {/* Ícono de menú móvil (solo visible en dispositivos móviles) */}
         <div className="mobile-menu-icon" onClick={toggleMobileMenu}>
           {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
         </div>
-        {/* Logo, siempre visible, alineado a la izquierda junto al ícono de menú en móviles */}
         <Link to="/" className="logo-link" onClick={closeMobileMenu}>
           <h1 className="logo">Video Game Store</h1>
         </Link>
-        {/* Navegación principal */}
         <nav className={`nav ${isMobileMenuOpen ? "active" : ""}`}>
           <ul>
             <li>
@@ -48,9 +47,27 @@ export const Navbar = () => {
               <Link to="/contact" onClick={closeMobileMenu}>Contact</Link>
             </li>
             <li className="profile-icon">
-              <Link to="/profile" onClick={closeMobileMenu}>
-                <FaUser />
-              </Link>
+              {store.user ? (
+                <Link to="/profile" onClick={closeMobileMenu}>
+                  <FaUser />
+                </Link>
+              ) : (
+                <div className="profile-dropdown">
+                  <button onClick={toggleProfileOptions} className="profile-btn">
+                    <FaUser />
+                  </button>
+                  {showProfileOptions && (
+                    <ul className="dropdown-menu">
+                      <li>
+                        <Link to="/login" onClick={closeMobileMenu}>Login</Link>
+                      </li>
+                      <li>
+                        <Link to="/register" onClick={closeMobileMenu}>Register</Link>
+                      </li>
+                    </ul>
+                  )}
+                </div>
+              )}
             </li>
             <li className="cart-icon">
               <Link to="/cart" onClick={closeMobileMenu}>

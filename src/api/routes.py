@@ -1,11 +1,12 @@
 from flask import Blueprint, request, jsonify, url_for
-from api.models import db, User, Product, Order, OrderItem, Wishlist
+from api.models import db, User, Product, Order, OrderItem, Wishlist, LibraryItem
 from api.utils import APIException, generate_sitemap
 from werkzeug.security import generate_password_hash, check_password_hash
 import jwt, datetime
 from flask_cors import CORS
 from functools import wraps
 import os
+import random, string  # For generating download codes
 
 api = Blueprint('api', __name__)
 CORS(api)
@@ -34,7 +35,9 @@ def token_required(f):
         return f(current_user, *args, **kwargs)
     return decorator
 
+# -------------------------
 # Authentication Endpoints
+# -------------------------
 @api.route("/auth/register", methods=["POST"])
 def register():
     data = request.get_json()
@@ -67,7 +70,9 @@ def login():
     )
     return jsonify({"token": token, "user": user.serialize()}), 200
 
+# -------------------------
 # Product Endpoints
+# -------------------------
 @api.route("/products", methods=["GET"])
 def get_products():
     products = Product.query.all()
@@ -121,7 +126,9 @@ def delete_product(current_user, product_id):
     db.session.commit()
     return jsonify({"message": "Product deleted"}), 200
 
+# -------------------------
 # Orders Endpoints
+# -------------------------
 @api.route("/orders", methods=["POST"])
 @token_required
 def create_order(current_user):
@@ -131,6 +138,7 @@ def create_order(current_user):
         return jsonify({"message": "No items provided"}), 400
     total = 0
     order_items = []
+    library_items = []  # To store new library items
     for item in items_data:
         product = Product.query.get(item["product_id"])
         if not product:
@@ -146,16 +154,37 @@ def create_order(current_user):
         )
         order_items.append(order_item)
         product.stock -= quantity
+
+        # Create library items for each quantity purchased
+        for i in range(quantity):
+            download_code = "GAME-" + "".join(random.choices(string.ascii_uppercase + string.digits, k=6))
+            library_item = LibraryItem(
+                user_id=current_user.id,
+                product_id=product.id,
+                download_code=download_code
+            )
+            library_items.append(library_item)
     new_order = Order(
         user_id=current_user.id,
         total=total,
         items=order_items
     )
     db.session.add(new_order)
+    # Add library items to the session
+    for item in library_items:
+        db.session.add(item)
     db.session.commit()
     return jsonify(new_order.serialize()), 201
 
+@api.route("/orders", methods=["GET"])
+@token_required
+def get_orders(current_user):
+    orders = Order.query.filter_by(user_id=current_user.id).all()
+    return jsonify([order.serialize() for order in orders]), 200
+
+# -------------------------
 # Wishlist Endpoints
+# -------------------------
 @api.route("/wishlist", methods=["GET"])
 @token_required
 def get_wishlist(current_user):
@@ -187,7 +216,18 @@ def remove_from_wishlist(current_user, item_id):
     db.session.commit()
     return jsonify({"message": "Item removed from wishlist"}), 200
 
+# -------------------------
+# Library Endpoints
+# -------------------------
+@api.route("/library", methods=["GET"])
+@token_required
+def get_library(current_user):
+    library_items = LibraryItem.query.filter_by(user_id=current_user.id).all()
+    return jsonify([item.serialize() for item in library_items]), 200
+
+# -------------------------
 # Reviews Endpoint (Simple Implementation)
+# -------------------------
 @api.route("/reviews", methods=["POST"])
 @token_required
 def add_review(current_user):
@@ -204,6 +244,52 @@ def add_review(current_user):
         "rating": rating
     }
     return jsonify(review), 201
+
+# -------------------------
+# NEW: Home Page Endpoints
+# -------------------------
+
+@api.route("/home/promotions", methods=["GET"])
+def get_promotions():
+    promotions = [
+        {
+            "id": 1,
+            "title": 'Lanzamiento Destacado: "Aventura Épica"',
+            "description": 'Descubre el nuevo mundo de Aventura Épica con un 20% de descuento por tiempo limitado.',
+            "imageUrl": "https://forum.xboxera.com/uploads/default/original/2X/1/13f2199320bb47c3b0658cfe603057b2f0a2b41b.jpeg"
+        }
+    ]
+    return jsonify(promotions), 200
+
+@api.route("/home/testimonials", methods=["GET"])
+def get_testimonials():
+    testimonials = [
+        {
+            "id": 1,
+            "user": "Juan Pérez",
+            "comment": "¡La mejor tienda de videojuegos en línea! Atención impecable y ofertas increíbles.",
+            "rating": 5
+        },
+        {
+            "id": 2,
+            "user": "María Gómez",
+            "comment": "Encuentro siempre los juegos que busco. ¡Muy recomendable!",
+            "rating": 4
+        }
+    ]
+    return jsonify(testimonials), 200
+
+@api.route("/home/discounts", methods=["GET"])
+def get_discount_offers():
+    discount_offers = [
+        {
+            "id": 1,
+            "title": 'Oferta Flash: 50% en "Aventura Épica"',
+            "expiresAt": (datetime.datetime.utcnow() + datetime.timedelta(hours=1)).isoformat() + "Z",
+            "imageUrl": "https://press-start.com.au/wp-content/uploads/2023/01/games-coming-in-february-770x433.jpg"
+        }
+    ]
+    return jsonify(discount_offers), 200
 
 @api.route("/sitemap", methods=["GET"])
 def sitemap():

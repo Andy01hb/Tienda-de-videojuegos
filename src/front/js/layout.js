@@ -12,6 +12,8 @@ import { About } from "./pages/about";
 import { Contact } from "./pages/contact";
 import Cart from "./pages/cart";
 import Checkout from "./pages/checkout";
+import { Register } from "./pages/register";
+import { Login } from "./pages/login"; // NEW: Import the Login page
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -36,6 +38,8 @@ const Layout = () => {
             <Route element={<Profile />} path="/profile" />
             <Route element={<About />} path="/about" />
             <Route element={<Contact />} path="/contact" />
+            <Route element={<Register />} path="/register" />
+            <Route element={<Login />} path="/login" /> {/* NEW */}
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           <Footer />

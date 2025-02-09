@@ -1,35 +1,70 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { Context } from "../store/appContext";
 import "../../styles/profile.css";
 
 export const Profile = () => {
-  // Dummy data for purchase history
-  const dummyPurchaseHistory = [
-    { id: 1, date: "2023-01-15", title: "The Legend of React", amount: 59.99 },
-    { id: 2, date: "2023-02-10", title: "React Racing", amount: 49.99 },
-  ];
+  const { store, actions } = useContext(Context);
 
-  // Dummy data for game library (purchased games)
-  const dummyLibrary = [
-    { id: 1, title: "The Legend of React", downloadLink: "#", code: "ABC123" },
-    { id: 2, title: "React Racing", downloadLink: "#", code: "XYZ456" },
-  ];
+  // UPDATED: Use backend data for purchase history and library instead of dummy data
+  // Previously, dummy data was used here.
+  const [purchaseHistory, setPurchaseHistory] = useState([]);
+  const [library, setLibrary] = useState([]);
 
-  // Dummy data for wishlist (saved games)
-  const dummyWishlist = [
-    { id: 1, title: "Redux Rampage", imageUrl: "https://via.placeholder.com/150x100?text=Redux+Rampage" },
-    { id: 2, title: "React Quest", imageUrl: "https://via.placeholder.com/150x100?text=React+Quest" },
-  ];
+  // For wishlist, we now fetch from the backend
+  const [wishlist, setWishlist] = useState([]);
 
-  // Dummy account settings data (initial values)
-  const [email, setEmail] = useState("user@example.com");
-  const [password, setPassword] = useState("********");
-  const [paymentMethod, setPaymentMethod] = useState("Tarjeta de Crédito");
+  // Account settings state, initially from store.user if available
+  const [email, setEmail] = useState(store.user ? store.user.email : "user@example.com");
+  const [password, setPassword] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState(
+    store.user && store.user.paymentMethod ? store.user.paymentMethod : "Tarjeta de Crédito"
+  );
 
-  // Handler for submitting account settings (for demonstration purposes)
-  const handleAccountUpdate = (e) => {
+  // Fetch wishlist from the backend when the component mounts or when store.token changes
+  useEffect(() => {
+    const fetchWishlist = async () => {
+      if (store.token) {
+        const data = await actions.getWishlist();
+        if (data) {
+          setWishlist(data);
+        }
+      }
+    };
+    fetchWishlist();
+  }, [store.token, actions]);
+
+  // NEW: Fetch purchase history (orders) and library from the backend when the component mounts or when store.token changes
+  useEffect(() => {
+    const fetchOrdersAndLibrary = async () => {
+      if (store.token) {
+        const ordersData = await actions.getOrders();
+        if (ordersData) {
+          setPurchaseHistory(ordersData);
+        }
+        const libraryData = await actions.getLibrary();
+        if (libraryData) {
+          setLibrary(libraryData);
+        }
+      }
+    };
+    fetchOrdersAndLibrary();
+  }, [store.token, actions]);
+
+  const handleAccountUpdate = async (e) => {
     e.preventDefault();
-    alert("Configuración actualizada.");
-    // In a real app, you'd send the updated data to the backend here.
+    // Prepare the updated data
+    const updatedData = {
+      email: email,
+      password: password, // if empty, backend can choose to ignore password update
+      paymentMethod: paymentMethod
+    };
+    // Call the updateUser action from flux
+    const result = await actions.updateUser(updatedData);
+    if (result) {
+      alert("Configuración actualizada.");
+    } else {
+      alert("Error actualizando la configuración.");
+    }
   };
 
   return (
@@ -40,7 +75,7 @@ export const Profile = () => {
         {/* Historial de Compras */}
         <section className="purchase-history">
           <h2>Historial de Compras</h2>
-          {dummyPurchaseHistory.length === 0 ? (
+          {purchaseHistory.length === 0 ? (
             <p>No has realizado ninguna compra.</p>
           ) : (
             <table className="history-table">
@@ -48,17 +83,15 @@ export const Profile = () => {
                 <tr>
                   <th>ID</th>
                   <th>Fecha</th>
-                  <th>Juego</th>
-                  <th>Monto</th>
+                  <th>Total</th>
                 </tr>
               </thead>
               <tbody>
-                {dummyPurchaseHistory.map((purchase) => (
-                  <tr key={purchase.id}>
-                    <td>{purchase.id}</td>
-                    <td>{purchase.date}</td>
-                    <td>{purchase.title}</td>
-                    <td>${purchase.amount.toFixed(2)}</td>
+                {purchaseHistory.map((order) => (
+                  <tr key={order.id}>
+                    <td>{order.id}</td>
+                    <td>{new Date(order.order_date).toLocaleString()}</td>
+                    <td>${order.total.toFixed(2)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -69,18 +102,21 @@ export const Profile = () => {
         {/* Biblioteca de Juegos */}
         <section className="game-library">
           <h2>Biblioteca de Juegos</h2>
-          {dummyLibrary.length === 0 ? (
+          {library.length === 0 ? (
             <p>No tienes juegos en tu biblioteca.</p>
           ) : (
             <div className="library-grid">
-              {dummyLibrary.map((game) => (
-                <div key={game.id} className="library-item">
-                  <h3>{game.title}</h3>
+              {library.map((item) => (
+                <div key={item.id} className="library-item">
+                  <h3>{item.product?.title}</h3>
                   <p>
-                    Enlace de Descarga: <a href={game.downloadLink}>Descargar</a>
+                    Enlace de Descarga: <a href="#">Descargar</a>
                   </p>
                   <p>
-                    Código: <strong>{game.code}</strong>
+                    Código: <strong>{item.download_code}</strong>
+                  </p>
+                  <p>
+                    Fecha de Compra: {new Date(item.purchase_date).toLocaleDateString()}
                   </p>
                 </div>
               ))}
@@ -107,7 +143,7 @@ export const Profile = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                required
+                placeholder="Nueva contraseña"
               />
             </div>
             <div className="form-group">
@@ -130,14 +166,17 @@ export const Profile = () => {
         {/* Lista de Deseos */}
         <section className="wishlist">
           <h2>Lista de Deseos</h2>
-          {dummyWishlist.length === 0 ? (
+          {wishlist.length === 0 ? (
             <p>No tienes juegos en tu lista de deseos.</p>
           ) : (
             <div className="wishlist-grid">
-              {dummyWishlist.map((game) => (
-                <div key={game.id} className="wishlist-item">
-                  <img src={game.imageUrl} alt={game.title} />
-                  <h3>{game.title}</h3>
+              {wishlist.map((item) => (
+                <div key={item.id} className="wishlist-item">
+                  <img
+                    src={item.product?.image_url || "https://via.placeholder.com/150x100"}
+                    alt={item.product?.title}
+                  />
+                  <h3>{item.product?.title}</h3>
                 </div>
               ))}
             </div>

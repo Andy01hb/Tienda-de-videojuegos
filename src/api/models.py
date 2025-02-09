@@ -88,3 +88,24 @@ class Wishlist(db.Model):
             "user_id": self.user_id,
             "product": self.product.serialize() if self.product else None
         }
+
+# ---------------------------
+# NEW: LibraryItem Model
+# ---------------------------
+class LibraryItem(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
+    download_code = db.Column(db.String(100), nullable=True)
+    purchase_date = db.Column(db.DateTime, default=datetime.utcnow)
+
+    product = db.relationship('Product')
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "product": self.product.serialize() if self.product else None,
+            "download_code": self.download_code,
+            "purchase_date": self.purchase_date.isoformat()
+        }
