@@ -1,152 +1,180 @@
-/* ================================= */
-/*         Estilos Base             */
-/* ================================= */
-.game-list {
-  padding: 2rem;
-  background-color: #f4f4f4;
-  color: #333;
+/* gamedetails.css */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+
+:root {
+  --primary-color: #e50914;
+  --white: #fff;
+  --text-color: #333;
+  --border-color: #ddd;
+  --font-family: 'Open Sans', sans-serif;
 }
 
-.game-list h1 {
-  text-align: center;
-  margin-bottom: 2rem;
-  font-size: 2rem;
+.gamedetails-page {
+  padding: 2rem 0;
+  background-color: var(--white);
+  color: var(--text-color);
 }
 
-/* ================================= */
-/*      Sección de Filtros          */
-/* ================================= */
-.filters {
+.gamedetails-page .container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.game-header {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.cover-image {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.gallery {
+  display: flex;
+  gap: 1rem;
   flex-wrap: wrap;
   justify-content: center;
-  background: #fff;
-  padding: 1rem;
-  border-radius: 8px;
-  margin-bottom: 2rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-.filter-group {
-  margin: 0.5rem 1rem;
-  display: flex;
-  flex-direction: column;
-}
-
-.filter-group label {
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-  font-size: 0.9rem;
-  color: #555;
-}
-
-.filter-group input,
-.filter-group select {
-  padding: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 0.9rem;
-}
-
-/* ================================= */
-/*       Contenedor de Juegos       */
-/* ================================= */
-.games-container {
-  display: grid;
-  gap: 1.5rem;
-}
-
-.games-container.grid {
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-}
-
-/* ================================= */
-/*          Tarjeta de Juego        */
-/* ================================= */
-.game-card {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  overflow: hidden;
-  transition: transform 0.3s, box-shadow 0.3s;
-  display: flex;
-  flex-direction: column;
-}
-
-.game-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-
-.game-image {
-  width: 100%;
-  height: 200px;
+.gallery img {
+  width: 100px;
+  height: 70px;
   object-fit: cover;
+  border-radius: 4px;
 }
 
-.game-info {
-  padding: 1rem;
-  flex: 1;
+.game-details h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.game-details h3 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+
+.requirements,
+.features {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.features li {
+  margin-bottom: 0.5rem;
+}
+
+.purchase-section {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
 }
 
-.game-info h3 {
-  font-size: 1.3rem;
-  margin-bottom: 0.5rem;
-  color: #333;
-}
-
-.game-info .description {
-  font-size: 0.9rem;
-  margin-bottom: 0.5rem;
-  color: #666;
-  flex: 1;
-}
-
-.game-info .price {
-  font-size: 1.1rem;
-  color: #e50914;
+.price-info {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
   font-weight: 600;
-  margin-bottom: 0.8rem;
+}
+
+.original-price {
+  text-decoration: line-through;
+  margin-right: 0.5rem;
+  color: var(--border-color);
+}
+
+.discounted-price {
+  color: var(--primary-color);
+}
+
+.purchase-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.buy-btn,
+.wishlist-btn {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
 }
 
 .buy-btn {
-  padding: 0.6rem;
   background-color: #28a745;
-  border: none;
-  color: #fff;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-size: 0.9rem;
+  color: var(--white);
 }
 
 .buy-btn:hover {
   background-color: #218838;
 }
 
-/* ================================= */
-/*     Vista en Lista (Opcional)    */
-/* ================================= */
-.games-container.list {
-  grid-template-columns: 1fr;
+.wishlist-btn {
+  background-color: var(--primary-color);
+  color: var(--white);
 }
 
-.games-container.list .game-card {
-  flex-direction: row;
+.wishlist-btn:hover {
+  background-color: #c40710;
 }
 
-.games-container.list .game-image {
-  width: 150px;
-  height: auto;
+.reviews-section {
+  margin-top: 2rem;
 }
 
-.games-container.list .game-info {
-  padding: 1rem 1.5rem;
-  flex: 1;
+.review-card {
+  background-color: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.review-user {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.review-comment {
+  font-style: italic;
+  margin-bottom: 0.5rem;
+}
+
+.review-rating {
+  color: var(--accent-color);
+}
+
+.tags-section {
+  margin-top: 2rem;
+}
+
+.tags {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.tag {
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
 }

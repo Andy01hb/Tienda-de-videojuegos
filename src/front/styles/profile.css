@@ -1,137 +1,171 @@
-/* ================================= */
-/*         Base Styling for Profile */
-/* ================================= */
+/* profile.css */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+
+:root {
+  --primary-color: #e50914;
+  --white: #fff;
+  --light-bg: #f4f4f4;
+  --text-color: #333;
+  --border-color: #ddd;
+  --font-family: 'Open Sans', sans-serif;
+}
+
 .profile-page {
-    padding: 2rem 0;
-    background-color: #f4f4f4;
-    color: #333;
-  }
-  .profile-page .container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 0 1rem;
-  }
-  .profile-page h1 {
-    text-align: center;
-    margin-bottom: 2rem;
-    font-size: 2.5rem;
-  }
-  
-  /* ================================= */
-  /*       Section Headings           */
-  /* ================================= */
-  .profile-page h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    border-bottom: 2px solid #ddd;
-    padding-bottom: 0.5rem;
-  }
-  
-  /* ================================= */
-  /*         Historial de Compras     */
-  /* ================================= */
-  .purchase-history {
-    margin-bottom: 2rem;
-  }
-  .history-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  .history-table th,
-  .history-table td {
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    text-align: left;
-  }
-  
-  /* ================================= */
-  /*         Biblioteca de Juegos     */
-  /* ================================= */
-  .game-library {
-    margin-bottom: 2rem;
-  }
-  .library-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-  }
-  .library-item {
-    background: #fff;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    flex: 1 1 200px;
-  }
-  
-  /* ================================= */
-  /*        Configuración de Cuenta   */
-  /* ================================= */
-  .account-settings {
-    margin-bottom: 2rem;
-  }
-  .settings-form {
-    background: #fff;
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  }
-  .settings-form .form-group {
-    margin-bottom: 1rem;
-  }
-  .settings-form label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-  }
-  .settings-form input,
-  .settings-form select {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
-  }
-  .update-btn {
-    padding: 0.8rem 2rem;
-    background-color: #e50914;
-    border: none;
-    color: #fff;
-    font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  .update-btn:hover {
-    background-color: #c40710;
-  }
-  
-  /* ================================= */
-  /*            Lista de Deseos       */
-  /* ================================= */
-  .wishlist {
-    margin-bottom: 2rem;
-  }
-  .wishlist-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-  }
-  .wishlist-item {
-    background: #fff;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    flex: 1 1 150px;
-  }
-  .wishlist-item img {
-    width: 100%;
-    max-width: 150px;
-    height: auto;
-    margin-bottom: 0.5rem;
-  }
-  .wishlist-item h3 {
-    font-size: 1rem;
-    margin: 0;
-  }
-  
+  padding: 2rem 0;
+  background-color: var(--light-bg);
+  color: var(--text-color);
+}
+
+.profile-page .container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.profile-page h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+.profile-page h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+
+/* Purchase History */
+.purchase-history {
+  margin-bottom: 2rem;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.history-table th,
+.history-table td {
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  text-align: left;
+}
+
+/* Game Library */
+.game-library {
+  margin-bottom: 2rem;
+}
+
+.library-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.library-item {
+  background-color: var(--white);
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  flex: 1 1 200px;
+}
+
+/* Account Settings */
+.account-settings {
+  margin-bottom: 2rem;
+}
+
+.settings-form {
+  background-color: var(--white);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.settings-form .form-group {
+  margin-bottom: 1rem;
+}
+
+.settings-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.settings-form input,
+.settings-form select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+/* Update button */
+.update-btn {
+  padding: 0.8rem 2rem;
+  background-color: var(--primary-color);
+  border: none;
+  color: var(--white);
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.update-btn:hover {
+  background-color: #c40710;
+}
+
+/* Wishlist in Profile */
+.wishlist {
+  margin-bottom: 2rem;
+}
+
+.wishlist-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.wishlist-item {
+  background-color: var(--white);
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  text-align: center;
+  flex: 1 1 150px;
+}
+
+.wishlist-item img {
+  width: 100%;
+  max-width: 150px;
+  height: auto;
+  margin-bottom: 0.5rem;
+}
+
+.wishlist-item h3 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.logout-btn {
+  padding: 0.8rem 2rem;
+  background-color: #d9534f; /* Color rojo para indicar acción de salir */
+  border: none;
+  color: var(--white);
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.logout-btn:hover {
+  background-color: #c9302c;
+}
+

@@ -1,0 +1,14 @@
+/* footer.css */
+.footer {
+    background-color: #1d1d1d; /* Fondo oscuro */
+    padding: 1.5rem 0;         /* Espaciado vertical */
+    text-align: center;
+    color: #fff;               /* Texto en blanco */
+    font-family: 'Open Sans', sans-serif;
+  }
+  
+  .footer p {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+  

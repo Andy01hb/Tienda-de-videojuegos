@@ -1,783 +1,394 @@
-/* ================================= */
-/*          Base & Reset           */
-/* ================================= */
-* {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
-  }
-  
-  body {
-	font-family: 'Open Sans', sans-serif;
-	line-height: 1.6;
-	background-color: #f4f4f4;
-	color: #333;
-  }
-  
-  .container {
-	width: 90%;
-	max-width: 1200px;
-	margin: 0 auto;
-	padding: 0 1rem;
-  }
-  
-  /* ================================= */
-  /*          Header & Navigation     */
-  /* ================================= */
+/* home.css */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
 
-  /* navbar.css */
+:root {
+  --primary-color: #e50914;
+  --light-bg: #f4f4f4;
+  --white: #fff;
+  --text-color: #333;
+  --border-color: #ddd;
+  --font-family: 'Open Sans', sans-serif;
+}
 
-/* Container for the profile dropdown */
-.profile-dropdown {
+/* General contenedor de la Home */
+.home {
+  background-color: var(--light-bg);
+  color: var(--text-color);
+  font-family: var(--font-family);
+}
+
+/* ====================== */
+/*      HERO / BANNER     */
+/* ====================== */
+
+/* Si hay promociones, se usará la sección banner; si no, se usa la hero */
+.hero,
+.banner {
   position: relative;
-  display: inline-block;
+  overflow: hidden;
 }
 
-/* The profile button (icon) */
-.profile-dropdown .profile-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1rem;  /* Adjusted size for a better fit */
-  color: inherit;
+.hero {
+  background: url('https://forum.xboxera.com/uploads/default/original/2X/1/13f2199320bb47c3b0658cfe603057b2f0a2b41b.jpeg')
+    no-repeat center center/cover;
+  padding: 100px 0;
+  text-align: center;
 }
 
-/* Dropdown menu container */
-.profile-dropdown .dropdown-menu {
+.hero::after,
+.banner::after {
+  content: "";
   position: absolute;
-  top: 100%;
-  right: 0;
-  background-color: #fff;
-  min-width: 120px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
 }
 
-/* Each dropdown menu item */
-.profile-dropdown .dropdown-menu li {
-  font-size: 0.85rem; /* Smaller font size */
-  padding: 8px 12px;
-  border-bottom: 1px solid #eee;
+.hero .hero-container,
+.banner .promo-content {
+  position: relative;
+  z-index: 1;
 }
 
-/* Remove border on the last item */
-.profile-dropdown .dropdown-menu li:last-child {
-  border-bottom: none;
+/* Hero container: se usa para el fallback cuando no hay promociones */
+.hero .hero-container {
+  color: var(--white);
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
-/* Links inside dropdown items */
-.profile-dropdown .dropdown-menu li a {
+.hero .hero-container h2 {
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.hero .hero-container p {
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+}
+
+.shop-btn {
+  padding: 0.8rem 2rem;
+  background-color: var(--primary-color);
+  border: none;
+  color: var(--white);
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.shop-btn:hover {
+  background-color: #c40710;
+}
+
+/* Banner / Promo cuando hay promociones */
+.banner .promo-banner {
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.banner .promo-content {
+  text-align: center;
+  background-color: rgba(0,0,0,0.4);
+  padding: 2rem;
+  border-radius: 10px;
+  color: var(--white);
+}
+
+.banner .promo-content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+}
+
+.banner .promo-content p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+}
+
+.promo-btn {
+  padding: 0.8rem 2rem;
+  background-color: var(--primary-color);
+  border: none;
+  color: var(--white);
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.promo-btn:hover {
+  background-color: #c40710;
+}
+
+/* ====================== */
+/*    FEATURED GAMES      */
+/* ====================== */
+.featured-games {
+  padding: 3rem 0;
+  background-color: var(--white);
+}
+
+.featured-games h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  color: var(--text-color);
+}
+
+.game-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.game-card {
+  background-color: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+  width: 300px;
+  text-align: center;
+}
+
+.game-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.game-link {
   text-decoration: none;
-  color: #333;
+  color: inherit;
+  display: block;
+  padding: 1rem;
 }
 
-/* Hover effect for dropdown items */
-.profile-dropdown .dropdown-menu li:hover {
-  background-color: #f4f4f4;
+.game-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
 }
 
-  .header {
-	background: linear-gradient(135deg, #1d1d1d, #333);
-	color: #fff;
-	padding: 1rem 0;
-	position: sticky;
-	top: 0;
-	z-index: 1000;
-  }
-  
-  .header-container {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-  }
-  
-  /* Logo y link */
-  .logo {
-	font-size: 1.8rem;
-	font-weight: 600;
-	margin-left: 1rem;
-  }
-  
-  .logo-link {
-	text-decoration: none;
-	color: inherit;
-  }
-  
-  .nav ul {
-	list-style: none;
-	display: flex;
-	margin-right: 1rem;
-	font-size: 25px;
-  }
-  
-  .nav li {
-	margin-left: 1.5rem;
-  }
-  
-  .nav a {
-	color: #fff;
-	text-decoration: none;
-	font-size: 1rem;
-	transition: color 0.3s;
-  }
-  
-  .nav a:hover {
-	color: #e50914;
-  }
-  
-  /* ================================= */
-  /*       Cart Icon in Navbar        */
-  /* ================================= */
-  .nav ul li.cart-icon {
-	position: relative;
-	margin-left: 1.5rem;
-  }
-	
-  .nav ul li.cart-icon a {
-	font-size: 1.8rem; /* Ajusta el tamaño del ícono según necesites */
-	display: inline-block;
-	position: relative;
-  }
-	
-  .cart-badge {
-	position: absolute;
-	top: -5px;
-	right: -10px;
-	background: red;
-	color: white;
-	border-radius: 50%;
-	padding: 2px 6px;
-	font-size: 0.75rem;
-	font-weight: bold;
-  }
-  
-  /* ================================= */
-  /*       Profile Icon in Navbar     */
-  /* ================================= */
-  .nav ul li.profile-icon {
-	position: relative;
-	margin-left: 1.5rem;
-  }
-	
-  .nav ul li.profile-icon a {
-	font-size: 1.8rem; /* Ajusta el tamaño según necesites */
-	display: inline-block;
-	position: relative;
-  }
-  
-  /* ================================= */
-  /*          Banner / Hero           */
-  /* ================================= */
-  .banner,
-  .hero {
-	position: relative;
-	overflow: hidden;
-  }
-  
-  .promo-banner {
-	background-size: cover;
-	background-position: center;
-	height: 400px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	position: relative;
-  }
-  
-  .promo-banner::after {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	/* Overlay con opacidad reducida para mayor brillo */
-	background: rgba(0, 0, 0, 0.2);
-  }
-  
-  /* ---------- Updated Promo Content Styling ---------- */
-  .promo-content {
-	position: relative;
-	text-align: center;
-	/* Fondo semitransparente para resaltar el texto */
-	background-color: rgba(0, 0, 0, 0.3);
-	color: #fff;
-	padding: 2rem;
-	border-radius: 10px;
-	/* Sombra sutil para separar */
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  }
-  
-  .promo-content h1 {
-	font-size: 2.5rem;
-	margin-bottom: 1rem;
-	/* Sombra en el texto para mejorar legibilidad */
-	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-  }
-  
-  .promo-content p {
-	font-size: 1.2rem;
-	margin-bottom: 1.5rem;
-	text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-  }
-  
-  .promo-btn {
-	padding: 0.8rem 2rem;
-	background-color: #e50914;
-	border: none;
-	color: #fff;
-	font-size: 1rem;
-	cursor: pointer;
-	border-radius: 5px;
-	transition: background-color 0.3s, transform 0.3s;
-	/* Sombra en el texto */
-	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
-  }
-  
-  .promo-btn:hover {
-	background-color: #c40710;
-	transform: scale(1.05);
-  }
-  
-  /* Hero (Fallback) */
-  .hero {
-	background: url('https://forum.xboxera.com/uploads/default/original/2X/1/13f2199320bb47c3b0658cfe603057b2f0a2b41b.jpeg')
-	  no-repeat center center/cover;
-	padding: 100px 0;
-	text-align: center;
-	position: relative;
-  }
-  
-  .hero::after {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background: rgba(0, 0, 0, 0.4);
-  }
-  
-  .hero-container {
-	position: relative;
-	color: #fff;
-  }
-  
-  .hero-container h2 {
-	font-size: 2.8rem;
-	margin-bottom: 1rem;
-	font-weight: 600;
-  }
-  
-  .hero-container p {
-	font-size: 1.3rem;
-	margin-bottom: 1.5rem;
-  }
-  
-  .shop-btn {
-	padding: 0.8rem 2rem;
-	background-color: #e50914;
-	border: none;
-	color: #fff;
-	font-size: 1rem;
-	cursor: pointer;
-	border-radius: 5px;
-	transition: background-color 0.3s, transform 0.3s;
-  }
-  
-  .shop-btn:hover {
-	background-color: #c40710;
-	transform: translateY(-3px);
-  }
-  
-  /* ================================= */
-  /*       Recommended / Featured     */
-  /* ================================= */
-  .featured-games {
-	padding: 3rem 0;
-	background-color: #fff;
-  }
-  
-  .featured-games h2 {
-	text-align: center;
-	margin-bottom: 2rem;
-	font-size: 2rem;
-	color: #333;
-  }
-  
-  .game-grid {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 2rem;
-	justify-content: center;
-  }
-  
-  .game-card {
-	background-color: #fff;
-	border: 1px solid #ddd;
-	width: 300px;
-	border-radius: 10px;
-	overflow: hidden;
-	transition: transform 0.3s, box-shadow 0.3s;
-  }
-  
-  .game-card:hover {
-	transform: translateY(-5px);
-	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  }
-  
-  .game-image {
-	width: 100%;
-	height: auto;
-  }
-  
-  .game-details {
-	padding: 1rem;
-	text-align: center;
-  }
-  
-  .game-details h3 {
-	margin-bottom: 0.8rem;
-	font-size: 1.4rem;
-  }
-  
-  .price {
-	font-weight: 600;
-	margin-bottom: 1rem;
-	color: #e50914;
-  }
-  
-  .add-to-cart-btn {
-	padding: 0.6rem 1.2rem;
-	background-color: #28a745;
-	border: none;
-	color: #fff;
-	cursor: pointer;
-	border-radius: 5px;
-	transition: background-color 0.3s, transform 0.3s;
-  }
-  
-  .add-to-cart-btn:hover {
-	background-color: #218838;
-	transform: translateY(-3px);
-  }
-  
-  /* ================================= */
-  /*         Popular Categories       */
-  /* ================================= */
-  .popular-categories {
-	padding: 3rem 0;
-	background-color: #f9f9f9;
-  }
-  
-  .popular-categories h2 {
-	text-align: center;
-	margin-bottom: 2rem;
-	font-size: 2rem;
-	color: #333;
-  }
-  
-  .categories-grid {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 1.5rem;
-	justify-content: center;
-  }
-  
-  .category-card {
-	background-color: #fff;
-	border: 1px solid #ddd;
-	padding: 1rem 2rem;
-	border-radius: 10px;
-	font-weight: 600;
-	transition: transform 0.3s, box-shadow 0.3s;
-  }
-  
-  .category-card:hover {
-	transform: translateY(-3px);
-	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  }
-  
-  .category-card h3 {
-	font-size: 1.2rem;
-  }
-  
-  /* ================================= */
-  /*          Discount Offers         */
-  /* ================================= */
-  .discount-offers {
-	padding: 3rem 0;
-	background-color: #fff;
-  }
-  
-  .discount-offers h2 {
-	text-align: center;
-	margin-bottom: 2rem;
-	font-size: 2rem;
-	color: #333;
-  }
-  
-  .offers-grid {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 1.5rem;
-	justify-content: center;
-  }
-  
-  .offer-card {
-	background-color: #fff;
-	border: 1px solid #ddd;
-	border-radius: 10px;
-	overflow: hidden;
-	width: 300px;
-	text-align: center;
-	transition: transform 0.3s, box-shadow 0.3s;
-  }
-  
-  .offer-card:hover {
-	transform: translateY(-5px);
-	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  }
-  
-  .offer-card img {
-	width: 100%;
-	height: auto;
-  }
-  
-  .offer-card h3 {
-	margin: 1rem 0;
-	font-size: 1.2rem;
-	color: #333;
-  }
-  
-  .counter {
-	font-size: 1rem;
-	margin-bottom: 1rem;
-	color: #e50914;
-  }
-  
-  .btn {
-	margin-bottom: 1rem;
-	padding: 0.6rem 1.2rem;
-	background-color: #28a745;
-	border: none;
-	color: #fff;
-	cursor: pointer;
-	border-radius: 5px;
-	transition: background-color 0.3s, transform 0.3s;
-  }
-  
-  .btn:hover {
-	background-color: #218838;
-	transform: translateY(-3px);
-  }
-  
-  /* ================================= */
-  /*           Testimonials           */
-  /* ================================= */
-  .testimonials {
-	padding: 3rem 0;
-	background-color: #f9f9f9;
-  }
-  
-  .testimonials h2 {
-	text-align: center;
-	margin-bottom: 2rem;
-	font-size: 2rem;
-	color: #333;
-  }
-  
-  .testimonials-grid {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 1.5rem;
-	justify-content: center;
-  }
-  
-  .testimonial-card {
-	background-color: #fff;
-	border: 1px solid #ddd;
-	padding: 1.5rem;
-	border-radius: 10px;
-	width: 300px;
-	text-align: center;
-	transition: transform 0.3s, box-shadow 0.3s;
-  }
-  
-  .testimonial-card:hover {
-	transform: translateY(-3px);
-	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  }
-  
-  .testimonial-card .comment {
-	font-style: italic;
-	margin-bottom: 1rem;
-	color: #555;
-  }
-  
-  .testimonial-card .user {
-	font-weight: 600;
-	margin-bottom: 0.5rem;
-	color: #333;
-  }
-  
-  .testimonial-card .rating {
-	color: #f39c12;
-  }
-  
-  /* ================================= */
-  /*              Footer              */
-  /* ================================= */
-  .footer {
-	background-color: #1d1d1d;
-	color: #fff;
-	text-align: center;
-	padding: 1.5rem 0;
-	margin-top: 2rem;
-	font-size: 0.9rem;
-  }
-  
-  /* ================================= */
-/*         Responsive Styles        */
-/* ================================= */
-@media (max-width: 768px) {
-	/* Ajuste del contenedor */
-	.container {
-	  width: 95%;
-	  padding: 0 0.5rem;
-	}
-	
-	/* Ajuste del header y la navegación */
-	.header-container {
-	  flex-direction: row;
-	  justify-content: flex-start;
-	  align-items: center;
-	}
-	
-	/* Mostrar el ícono de menú móvil en pantallas pequeñas */
-	.mobile-menu-icon {
-	  display: block;
-	  font-size: 2rem;
-	  cursor: pointer;
-	  color: #fff;
-	  margin-right: 1rem;
-	}
-	
-	/* Ocultar el menú de navegación de escritorio; se usará como overlay lateral */
-	.nav {
-	  position: fixed;
-	  top: 0;
-	  right: -100%;
-	  width: 50%; /* No ocupará más de la mitad de la pantalla */
-	  height: 100%;
-	  background-color: #333;
-	  flex-direction: column;
-	  align-items: center;
-	  justify-content: center;
-	  transition: right 0.3s ease-in-out;
-	  z-index: 1001;
-	}
-	
-	.nav.active {
-	  right: 0;
-	}
-	
-	.nav ul {
-	  flex-direction: column;
-	  align-items: center;
-	  margin-right: 0;
-	}
-	
-	.nav li {
-	  margin-left: 0;
-	  margin-bottom: 0.5rem;
-	}
-	
-	.nav ul li a {
-	  font-size: 1.5rem;
-	  color: #fff;
-	}
-	
-	/* Ajuste de iconos (carrito y perfil) */
-	.nav ul li.cart-icon a,
-	.nav ul li.profile-icon a {
-	  font-size: 1.5rem;
-	}
-	
-	/* Ajuste de Banner / Hero */
-	.promo-banner {
-	  height: 300px;
-	}
-	
-	.promo-content {
-	  padding: 1.5rem;
-	}
-	
-	.promo-content h1 {
-	  font-size: 2rem;
-	}
-	
-	.promo-content p {
-	  font-size: 1rem;
-	}
-	
-	.shop-btn, .promo-btn {
-	  padding: 0.7rem 1.5rem;
-	  font-size: 0.9rem;
-	}
-	
-	.hero {
-	  padding: 70px 0;
-	}
-	
-	.hero-container h2 {
-	  font-size: 2rem;
-	}
-	
-	.hero-container p {
-	  font-size: 1rem;
-	}
-	
-	/* Ajustes para secciones de productos */
-	.game-grid {
-	  flex-direction: column;
-	  gap: 1rem;
-	}
-	
-	.game-card {
-	  width: 100%;
-	}
-	
-	/* Ajustes en categorías, ofertas y testimonios */
-	.categories-grid,
-	.offers-grid,
-	.testimonials-grid {
-	  flex-direction: column;
-	  align-items: center;
-	}
-	
-	.featured-games h2,
-	.popular-categories h2,
-	.discount-offers h2,
-	.testimonials h2 {
-	  font-size: 1.8rem;
-	}
-	
-	/* Ajuste de botones */
-	.add-to-cart-btn,
-	.btn {
-	  font-size: 0.9rem;
-	  padding: 0.5rem 1rem;
-	}
-  }
-  /* Estilos base para dispositivos móviles */
-@media (max-width: 768px) {
-	.mobile-menu-icon {
-	  display: block;
-	  font-size: 2rem;
-	  cursor: pointer;
-	  color: #fff;
-	  margin-right: 1rem;
-	}
-	
-	/* ...otros estilos responsive para móviles... */
-  }
-  
-  /* Para dispositivos de escritorio (min-width: 769px), ocultamos el ícono de hamburguesa */
-  @media (min-width: 769px) {
-	.mobile-menu-icon {
-	  display: none;
-	}
-  }
-  
-  /* -------------------------------- */
-/*   Updated Profile Dropdown       */
-/* -------------------------------- */
-.profile-dropdown {
-	position: relative;
-	display: inline-block;
-  }
-  
-  /* The profile button (icon) inside the dropdown */
-  .profile-dropdown .profile-btn {
-	background: none;
-	border: none;
-	cursor: pointer;
-	font-size: 1rem;  /* You can adjust this if needed */
-	color: inherit;
-  }
-  
-  /* Dropdown menu container */
-  .profile-dropdown .dropdown-menu {
-	position: absolute;
-	top: 110%; /* A bit below the button */
-	right: 0;
-	background-color: #fff;
-	min-width: 100px;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	padding: 0;
-	margin: 0;
-	list-style: none;
-	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-	z-index: 1000;
-  }
-  
-  /* Each dropdown menu item */
-  .profile-dropdown .dropdown-menu li {
-	font-size: 0.75rem; /* Smaller font size for the dropdown items */
-	padding: 6px 10px;
-	border-bottom: 1px solid #eee;
-  }
-  
-  /* Remove border on the last item */
-  .profile-dropdown .dropdown-menu li:last-child {
-	border-bottom: none;
-  }
-  
-  /* Links inside dropdown items */
-  .profile-dropdown .dropdown-menu li a {
-	text-decoration: none;
-	color: #333;
-  }
-  
-  /* Hover effect for dropdown items */
-  .profile-dropdown .dropdown-menu li:hover {
-	background-color: #f4f4f4;
-  }
-  
-  /* In profile.css, add these styles at the bottom */
+.game-card h3 {
+  margin: 1rem 0 0.5rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
 
-.logout-btn {
-	background-color: #d9534f;
-	color: #fff;
-	border: none;
-	padding: 0.6rem 1.2rem;
-	border-radius: 4px;
-	cursor: pointer;
-	transition: background-color 0.3s ease;
-	margin-bottom: 1rem;
-  }
-  
-  .logout-btn:hover {
-	background-color: #c9302c;
-  }
-  
-  /* Estilos para el ícono de wishlist */
-.nav ul li.wishlist-icon {
-	margin-left: 1.5rem;
-  }
-  
-  .nav ul li.wishlist-icon a {
-	font-size: 1.8rem; /* Ajusta el tamaño según necesites */
-	color: #fff;       /* Asegura que el color sea blanco */
-  }
+.price {
+  font-size: 1.2rem;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
 
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  padding-bottom: 1rem;
+}
 
+.add-to-cart-btn,
+.wishlist-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
 
-  
+.add-to-cart-btn {
+  background-color: #28a745;
+  color: var(--white);
+}
+
+.add-to-cart-btn:hover {
+  background-color: #218838;
+}
+
+.wishlist-btn {
+  background: none;
+  font-size: 1.8rem;
+  color: var(--primary-color);
+}
+
+.wishlist-btn:hover {
+  color: #ff4d4d;
+}
+
+/* ====================== */
+/*   POPULAR CATEGORIES   */
+/* ====================== */
+.popular-categories {
+  padding: 3rem 0;
+  background-color: var(--light-bg);
+}
+
+.popular-categories h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  color: var(--text-color);
+}
+
+.categories-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.category-card {
+  background-color: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 1rem 2rem;
+  font-weight: 600;
+  transition: transform 0.3s, box-shadow 0.3s;
+  color: var(--text-color);
+}
+
+.category-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+.category-card h3 {
+  font-size: 1.2rem;
+}
+
+/* ====================== */
+/*    DISCOUNT OFFERS     */
+/* ====================== */
+.discount-offers {
+  padding: 3rem 0;
+  background-color: var(--white);
+}
+
+.discount-offers h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  color: var(--text-color);
+}
+
+.offers-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.offer-card {
+  background-color: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  overflow: hidden;
+  width: 300px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.offer-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.offer-card img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.offer-card h3 {
+  margin: 1rem 0;
+  font-size: 1.2rem;
+  color: var(--text-color);
+}
+
+.counter {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+.btn {
+  margin-bottom: 1rem;
+  padding: 0.6rem 1.2rem;
+  background-color: #28a745;
+  border: none;
+  color: var(--white);
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn:hover {
+  background-color: #218838;
+  transform: translateY(-3px);
+}
+
+/* ====================== */
+/*     TESTIMONIALS       */
+/* ====================== */
+.testimonials {
+  padding: 3rem 0;
+  background-color: var(--light-bg);
+}
+
+.testimonials h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  color: var(--text-color);
+}
+
+.testimonials-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.testimonial-card {
+  background-color: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 1.5rem;
+  width: 300px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  color: var(--text-color);
+}
+
+.testimonial-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+.testimonial-card .comment {
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.testimonial-card .user {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.testimonial-card .rating {
+  color: var(--accent-color);
+}

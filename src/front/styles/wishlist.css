@@ -1,149 +1,81 @@
 /* wishlist.css */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+
+:root {
+  --primary-color: #e50914;
+  --white: #fff;
+  --light-bg: #f4f4f4;
+  --text-color: #333;
+  --border-color: #ddd;
+  --font-family: 'Open Sans', sans-serif;
+}
 
 .wishlist-page {
-    padding: 2rem;
-    background-color: #f4f4f4;
-    color: #333;
-  }
-  
-  .wishlist-page .container {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  .wishlist-page h1 {
-    text-align: center;
-    margin-bottom: 2rem;
-    font-size: 2rem;
-  }
-  
-  .wishlist-grid {
-    display: grid;
-    gap: 1.5rem;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  }
-  
-  .wishlist-item {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 1rem;
-    text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-  
-  .wishlist-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  }
-  
-  .wishlist-item img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 4px;
-    margin-bottom: 1rem;
-  }
-  
-  .wishlist-item h3 {
-    font-size: 1.3rem;
-    margin-bottom: 1rem;
-  }
-  
-/* ===================================================== */
-/*       Estilos para el botón de Wishlist             */
-/* ===================================================== */
+  padding: 2rem;
+  background-color: var(--light-bg);
+  color: var(--text-color);
+}
 
-/* El botón de wishlist se usa en las tarjetas de producto */
-/* Se recomienda que sea transparente para solo mostrar el ícono */
-.wishlist-btn {
-    border: none;
-    cursor: pointer;
-    font-size: 1.8rem;       /* Ajusta el tamaño del ícono según necesites */
-    color: #ff0000;             /* Color blanco para que resalte en fondos oscuros */
-    transition: color 0.3s ease, transform 0.2s ease;
-    margin-left: 0.5rem;
-  }
-  
-  /* Al pasar el mouse, se aumenta ligeramente el tamaño y se cambia el color */
-  .wishlist-btn:hover {
-    transform: scale(1.1);
-    color: #ff4d4d;          /* Color rojo claro o el que prefieras para indicar acción */
-  }
-  
-  /* Si deseas, puedes definir una clase adicional para cuando el producto ya está en la wishlist.
-     En nuestro ejemplo, en el JSX usamos condicionalmente el ícono, pero podrías alternar una clase,
-     por ejemplo, agregando la clase "in-wishlist" al botón y definiendo estilos específicos. */
-  .wishlist-btn.in-wishlist {
-    color: #ff4d4d;          /* Se puede usar el mismo color o uno distinto para indicar que ya está agregado */
-  }
-  
-  /* ===================================================== */
-  /*    Estilos para la Vista de Wishlist (Wishlist.js)     */
-  /* ===================================================== */
-  
-  .wishlist-page {
-    padding: 2rem;
-    background-color: #f4f4f4;
-    color: #333;
-  }
-  
-  .wishlist-page .container {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  .wishlist-page h1 {
-    text-align: center;
-    margin-bottom: 2rem;
-    font-size: 2rem;
-  }
-  
-  .wishlist-grid {
-    display: grid;
-    gap: 1.5rem;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  }
-  
-  .wishlist-item {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 1rem;
-    text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-  
-  .wishlist-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  }
-  
-  .wishlist-item img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 4px;
-    margin-bottom: 1rem;
-  }
-  
-  .wishlist-item h3 {
-    font-size: 1.3rem;
-    margin-bottom: 1rem;
-  }
-  
-  .wishlist-item button {
-    padding: 0.5rem 1rem;
-    background-color: #d9534f;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .wishlist-item button:hover {
-    background-color: #c9302c;
-  }
-  
-  
+.wishlist-page .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  color: var(--text-color);
+}
+
+.wishlist-page h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.wishlist-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+
+.wishlist-item {
+  background-color: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  color: var(--text-color);
+}
+
+.wishlist-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.wishlist-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.wishlist-item h3 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: var(--text-color);
+}
+
+.wishlist-item button {
+  padding: 0.5rem 1rem;
+  background-color: #d9534f;
+  color: var(--white);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.wishlist-item button:hover {
+  background-color: #c9302c;
+}

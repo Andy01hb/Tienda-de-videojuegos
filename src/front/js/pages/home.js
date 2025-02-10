@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
-import { FaRegHeart, FaHeart } from "react-icons/fa"; // Íconos de corazón vacío y relleno
+import { FaRegHeart, FaHeart } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 import "../../styles/home.css";
 
 export const Home = () => {
@@ -8,8 +9,10 @@ export const Home = () => {
   const [promotions, setPromotions] = useState([]);
   const [discountOffers, setDiscountOffers] = useState([]);
   const [testimonials, setTestimonials] = useState([]);
-  // Estado local para mapear los IDs de productos a los IDs de wishlist
+  // Estado local para mapear el id del producto con el id del wishlist
   const [wishlistMap, setWishlistMap] = useState({});
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (store.products.length === 0) {
@@ -26,7 +29,6 @@ export const Home = () => {
     fetchHomeData();
   }, [store.products, actions]);
 
-  // Al montar, obtenemos la wishlist del backend para actualizar el estado local
   useEffect(() => {
     const fetchWishlist = async () => {
       if (store.token) {
@@ -45,15 +47,14 @@ export const Home = () => {
     fetchWishlist();
   }, [store.token, actions]);
 
-  // Se muestran los juegos recomendados; se limita a 3 productos.
-  const recommendedGames = store.products;
-  const recommendedGamesToShow = recommendedGames.slice(0, 3);
-
+  // Juegos recomendados: limitamos a 3
+  const recommendedGamesToShow = store.products.slice(0, 3);
+  // Categorías populares (únicas)
   const popularCategories = Array.from(
     new Set(store.products.map((product) => product.category).filter(Boolean))
   ).map((cat, index) => ({ id: index, name: cat }));
 
-  // Componente contador para ofertas con tiempo límite
+  // Componente para mostrar el contador de ofertas limitadas
   const LimitedOfferCounter = ({ expiresAt }) => {
     const calculateTimeLeft = () => {
       const difference = +new Date(expiresAt) - +new Date();
@@ -92,15 +93,16 @@ export const Home = () => {
     );
   };
 
-  // Función para agregar un juego al carrito
   const handleAddToCart = (product) => {
     actions.addToCart(product, 1);
   };
 
-  // Función toggle para la wishlist: si ya está agregado se elimina, de lo contrario se agrega.
   const toggleWishlist = async (product) => {
+    if (!store.token) {
+      navigate("/register");
+      return;
+    }
     if (wishlistMap[product.id]) {
-      // El producto ya está en la wishlist, se elimina
       const wishlistItemId = wishlistMap[product.id];
       const result = await actions.removeFromWishlist(wishlistItemId);
       if (result) {
@@ -109,7 +111,6 @@ export const Home = () => {
         setWishlistMap(newMap);
       }
     } else {
-      // El producto no está en la wishlist, se agrega
       const result = await actions.addToWishlist(product.id);
       if (result && result.id) {
         setWishlistMap({ ...wishlistMap, [product.id]: result.id });
@@ -119,7 +120,7 @@ export const Home = () => {
 
   return (
     <div className="home">
-      {/* Sección Banner / Hero con promociones dinámicas */}
+      {/* Banner / Hero section */}
       {promotions.length > 0 ? (
         <section className="banner">
           {promotions.map((promo) => (
@@ -146,7 +147,7 @@ export const Home = () => {
         </section>
       )}
 
-      {/* Sección de Juegos Recomendados (solo 3 productos) */}
+      {/* Recommended Games Section */}
       <section id="games" className="featured-games">
         <div className="container">
           <h2>Juegos Recomendados</h2>
@@ -154,22 +155,22 @@ export const Home = () => {
             {recommendedGamesToShow.length > 0 ? (
               recommendedGamesToShow.map((product) => (
                 <div key={product.id} className="game-card">
-                  <img
-                    src={product.image_url || "https://via.placeholder.com/150"}
-                    alt={product.title}
-                    className="game-image"
-                  />
-                  <div className="game-details">
+                  <Link to={`/gamedetails/${product.id}`} className="game-link">
+                    <img
+                      src={product.image_url || "https://via.placeholder.com/150"}
+                      alt={product.title}
+                      className="game-image"
+                    />
                     <h3>{product.title}</h3>
-                    <p className="price">${product.price.toFixed(2)}</p>
-                    <div className="actions">
-                      <button className="add-to-cart-btn" onClick={() => handleAddToCart(product)}>
-                        Add to Cart
-                      </button>
-                      <button className="wishlist-btn" onClick={() => toggleWishlist(product)}>
-                        {wishlistMap[product.id] ? <FaHeart /> : <FaRegHeart />}
-                      </button>
-                    </div>
+                  </Link>
+                  <p className="price">${product.price.toFixed(2)}</p>
+                  <div className="actions">
+                    <button className="add-to-cart-btn" onClick={() => handleAddToCart(product)}>
+                      Add to Cart
+                    </button>
+                    <button className="wishlist-btn" onClick={() => toggleWishlist(product)}>
+                      {wishlistMap[product.id] ? <FaHeart /> : <FaRegHeart />}
+                    </button>
                   </div>
                 </div>
               ))
@@ -180,21 +181,25 @@ export const Home = () => {
         </div>
       </section>
 
-      {/* Sección de Categorías Populares */}
+      {/* Popular Categories Section */}
       <section className="popular-categories">
         <div className="container">
           <h2>Categorías Populares</h2>
           <div className="categories-grid">
-            {popularCategories.map((cat) => (
-              <div key={cat.id} className="category-card">
-                <h3>{cat.name}</h3>
-              </div>
-            ))}
+            {popularCategories.length > 0 ? (
+              popularCategories.map((cat) => (
+                <div key={cat.id} className="category-card">
+                  <h3>{cat.name}</h3>
+                </div>
+              ))
+            ) : (
+              <p>No hay categorías disponibles.</p>
+            )}
           </div>
         </div>
       </section>
 
-      {/* Sección de Ofertas con Descuento */}
+      {/* Discount Offers Section */}
       <section className="discount-offers">
         <div className="container">
           <h2>Descuentos y Ofertas</h2>
@@ -215,7 +220,7 @@ export const Home = () => {
         </div>
       </section>
 
-      {/* Sección de Testimonios */}
+      {/* Testimonials Section */}
       <section className="testimonials">
         <div className="container">
           <h2>Testimonios</h2>

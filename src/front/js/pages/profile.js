@@ -77,7 +77,7 @@ export const Profile = () => {
   return (
     <div className="profile-page">
       <div className="container">
-        <h1>Perfil de Usuario</h1>
+        <h1>Mi Perfil</h1>
         {/* NEW: Logout Button */}
         <button onClick={handleLogout} className="logout-btn">
           Log Out

@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaShoppingCart, FaUser, FaBars, FaTimes, FaRegHeart } from "react-icons/fa"; // Se agrega FaRegHeart para el corazón
 import { Context } from "../store/appContext";
-import "../../styles/home.css"; 
+import "../../styles/navbar.css"; 
 
 export const Navbar = () => {
   const { store } = useContext(Context);
