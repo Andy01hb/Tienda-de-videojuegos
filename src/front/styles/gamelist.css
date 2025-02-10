@@ -113,3 +113,20 @@
   padding-bottom: 1rem;
   margin-top: auto;  /* Empuja este bloque al final de la tarjeta */
 }
+/* Estilos para el botón de toggle en el carrito */
+.cart-toggle-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: var(--primary-color);
+  color: var(--white);
+  font-size: 1rem;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+/* Cuando el producto esté en el carrito, aplicamos la clase "added" */
+.cart-toggle-btn.added {
+  background-color: #28a745; /* Verde para indicar que fue agregado */
+  transform: scale(1.05);
+}

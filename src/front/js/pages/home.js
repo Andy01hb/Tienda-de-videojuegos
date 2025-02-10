@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
-import { FaRegHeart, FaHeart } from "react-icons/fa";
+import { FaRegHeart, FaHeart, FaCheck } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import "../../styles/home.css";
 
@@ -46,7 +46,7 @@ export const Home = () => {
     };
     fetchWishlist();
   }, [store.token, actions]);
-
+    
   // Juegos recomendados: limitamos a 3
   const recommendedGamesToShow = store.products.slice(0, 3);
   // Categorías populares (únicas)
@@ -93,10 +93,17 @@ export const Home = () => {
     );
   };
 
-  const handleAddToCart = (product) => {
-    actions.addToCart(product, 1);
+  // Función para togglear el carrito: si el producto ya está en el carrito, se remueve; si no, se agrega.
+  const toggleCart = (product) => {
+    const inCart = store.cartItems.some((item) => item.id === product.id);
+    if (inCart) {
+      actions.removeFromCart(product.id);
+    } else {
+      actions.addToCart(product, 1);
+    }
   };
 
+  // Función para togglear la wishlist (igual que en gamelist)
   const toggleWishlist = async (product) => {
     if (!store.token) {
       navigate("/register");
@@ -153,27 +160,33 @@ export const Home = () => {
           <h2>Juegos Recomendados</h2>
           <div className="game-grid">
             {recommendedGamesToShow.length > 0 ? (
-              recommendedGamesToShow.map((product) => (
-                <div key={product.id} className="game-card">
-                  <Link to={`/gamedetails/${product.id}`} className="game-link">
-                    <img
-                      src={product.image_url || "https://via.placeholder.com/150"}
-                      alt={product.title}
-                      className="game-image"
-                    />
-                    <h3>{product.title}</h3>
-                  </Link>
-                  <p className="price">${product.price.toFixed(2)}</p>
-                  <div className="actions">
-                    <button className="add-to-cart-btn" onClick={() => handleAddToCart(product)}>
-                      Add to Cart
-                    </button>
-                    <button className="wishlist-btn" onClick={() => toggleWishlist(product)}>
-                      {wishlistMap[product.id] ? <FaHeart /> : <FaRegHeart />}
-                    </button>
+              recommendedGamesToShow.map((product) => {
+                const inCart = store.cartItems.some((item) => item.id === product.id);
+                return (
+                  <div key={product.id} className="game-card">
+                    <Link to={`/gamedetails/${product.id}`} className="game-link">
+                      <img
+                        src={product.image_url || "https://via.placeholder.com/150"}
+                        alt={product.title}
+                        className="game-image"
+                      />
+                      <h3>{product.title}</h3>
+                    </Link>
+                    <p className="price">${product.price.toFixed(2)}</p>
+                    <div className="actions">
+                      <button
+                        className={`add-to-cart-btn ${inCart ? "added" : ""}`}
+                        onClick={() => toggleCart(product)}
+                      >
+                        {inCart ? <FaCheck /> : "Add to Cart"}
+                      </button>
+                      <button className="wishlist-btn" onClick={() => toggleWishlist(product)}>
+                        {wishlistMap[product.id] ? <FaHeart /> : <FaRegHeart />}
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))
+                );
+              })
             ) : (
               <p>No hay juegos disponibles.</p>
             )}

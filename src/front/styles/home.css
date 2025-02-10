@@ -392,3 +392,20 @@
 .testimonial-card .rating {
   color: var(--accent-color);
 }
+/* Botón de toggle en el carrito */
+.add-to-cart-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: var(--primary-color);
+  color: var(--white);
+  font-size: 1rem;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+/* Estado agregado: producto en el carrito */
+.add-to-cart-btn.added {
+  background-color: #28a745; /* Verde */
+  transform: scale(1.05);
+}

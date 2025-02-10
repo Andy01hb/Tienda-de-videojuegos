@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
-import { FaRegHeart, FaHeart } from "react-icons/fa";
+import { FaRegHeart, FaHeart, FaCheck } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import "../../styles/gamelist.css";
 
@@ -10,20 +10,16 @@ const GameList = () => {
   const [filterCategory, setFilterCategory] = useState("");
   const [filterMinPrice, setFilterMinPrice] = useState("");
   const [filterMaxPrice, setFilterMaxPrice] = useState("");
-  
-  // Local state for mapping product id to wishlist item id
   const [wishlistMap, setWishlistMap] = useState({});
 
   const navigate = useNavigate();
 
-  // Load products if not loaded already
   useEffect(() => {
     if (store.products.length === 0) {
       actions.getProducts();
     }
   }, [store.products, actions]);
 
-  // Fetch wishlist and create a mapping from product id to wishlist item id
   useEffect(() => {
     const fetchWishlist = async () => {
       if (store.token) {
@@ -42,12 +38,10 @@ const GameList = () => {
     fetchWishlist();
   }, [store.token, actions]);
 
-  // Generate unique categories from the products
   const categories = Array.from(
     new Set(store.products.map((product) => product.category).filter(Boolean))
   );
 
-  // Filter products based on search, category, and price range
   const filteredGames = store.products.filter((product) => {
     const matchesQuery = product.title.toLowerCase().includes(filterQuery.toLowerCase());
     const matchesCategory = filterCategory ? product.category === filterCategory : true;
@@ -56,12 +50,17 @@ const GameList = () => {
     return matchesQuery && matchesCategory && matchesMinPrice && matchesMaxPrice;
   });
 
-  const handleAddToCart = (product) => {
-    actions.addToCart(product, 1);
+  // Función para hacer toggle en el carrito
+  const toggleCart = (product) => {
+    const inCart = store.cartItems.some((item) => item.id === product.id);
+    if (inCart) {
+      actions.removeFromCart(product.id);
+    } else {
+      actions.addToCart(product, 1);
+    }
   };
 
-  // Toggle wishlist: if the user is not logged in, redirect them to registration;
-  // otherwise, add or remove the product from the wishlist.
+  // Función para togglear la wishlist (ya implementada)
   const toggleWishlist = async (product) => {
     if (!store.token) {
       navigate("/register");
@@ -87,6 +86,7 @@ const GameList = () => {
     <div className="game-list">
       <h1>Lista de Juegos</h1>
       <div className="filters">
+        {/* Filtros: Buscar, Categoría, Precio Mínimo y Máximo */}
         <div className="filter-group">
           <label>Buscar</label>
           <input
@@ -128,32 +128,37 @@ const GameList = () => {
         </div>
       </div>
 
-      <div className="games-container grid">
+      <div className="games-container">
         {filteredGames.length > 0 ? (
-          filteredGames.map((product) => (
-            <div key={product.id} className="game-card">
-              {/* Wrap image and title in a Link to redirect to game details */}
-              <Link to={`/gamedetails/${product.id}`} className="game-link">
-                <img
-                  src={product.image_url || "https://via.placeholder.com/150"}
-                  alt={product.title}
-                  className="game-image"
-                />
-                <h3>{product.title}</h3>
-              </Link>
-              <p className="price">${product.price.toFixed(2)}</p>
-              <div className="actions">
-                <button className="buy-btn" onClick={() => handleAddToCart(product)}>
-                  Add to Cart
-                </button>
-                <button className="wishlist-btn" onClick={() => toggleWishlist(product)}>
-                  {wishlistMap[product.id] ? <FaHeart /> : <FaRegHeart />}
-                </button>
+          filteredGames.map((product) => {
+            const inCart = store.cartItems.some((item) => item.id === product.id);
+            return (
+              <div key={product.id} className="game-card">
+                <Link to={`/gamedetails/${product.id}`} className="game-link">
+                  <img
+                    src={product.image_url || "https://via.placeholder.com/150"}
+                    alt={product.title}
+                    className="game-image"
+                  />
+                  <h3>{product.title}</h3>
+                </Link>
+                <p className="price">${product.price.toFixed(2)}</p>
+                <div className="actions">
+                  <button
+                    className={`cart-toggle-btn ${inCart ? "added" : ""}`}
+                    onClick={() => toggleCart(product)}
+                  >
+                    {inCart ? <FaCheck /> : "Add to Cart"}
+                  </button>
+                  <button className="wishlist-btn" onClick={() => toggleWishlist(product)}>
+                    {wishlistMap[product.id] ? <FaHeart /> : <FaRegHeart />}
+                  </button>
+                </div>
               </div>
-            </div>
-          ))
+            );
+          })
         ) : (
-          <p>No hay juegos disponibles con los filtros seleccionados.</p>
+          <p>No hay juegos disponibles.</p>
         )}
       </div>
     </div>
