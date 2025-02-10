@@ -37,7 +37,10 @@
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 }
 
+/* Actualización: convertimos cada tarjeta en contenedor flex en columna */
 .wishlist-item {
+  display: flex;
+  flex-direction: column;
   background-color: var(--white);
   border: 1px solid var(--border-color);
   border-radius: 8px;
@@ -52,6 +55,7 @@
   box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
+/* La imagen y el título se mostrarán normalmente */
 .wishlist-item img {
   width: 100%;
   height: 200px;
@@ -66,7 +70,9 @@
   color: var(--text-color);
 }
 
+/* Actualización: el botón se empuja hacia el final */
 .wishlist-item button {
+  margin-top: auto;
   padding: 0.5rem 1rem;
   background-color: #d9534f;
   color: var(--white);
@@ -78,4 +84,12 @@
 
 .wishlist-item button:hover {
   background-color: #c9302c;
+}
+.wishlist-item img {
+  display: block;          /* Se convierte en bloque para centrar */
+  margin: 0 auto 1rem auto; /* Márgenes automáticos en los laterales */
+  width: 100%;             /* Ocupa el 100% del ancho del contenedor */
+  height: 200px;           /* Altura fija para mantener la uniformidad */
+  object-fit: cover;       /* Cubre el contenedor sin deformar la imagen */
+  border-radius: 4px;
 }

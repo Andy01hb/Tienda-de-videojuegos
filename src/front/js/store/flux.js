@@ -14,7 +14,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					initial: "white"
 				}
 			],
-			// Global state para productos, usuario, token, carrito y wishlist (aunque la wishlist se consultará desde el backend)
+			// Global state para productos, usuario, token, carrito y wishlist
 			products: [],
 			user: null,
 			token: null,
@@ -66,10 +66,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 					if (!resp.ok) throw new Error("Login failed");
 					const data = await resp.json();
+					// Actualizamos el store y persistimos el token
 					setStore({ user: data.user, token: data.token });
+					localStorage.setItem("token", data.token);
 					return data;
 				} catch (error) {
 					console.error("Error logging in", error);
+				}
+			},
+
+			logoutUser: () => {
+				// Limpiamos el store y removemos el token
+				setStore({ user: null, token: null });
+				localStorage.removeItem("token");
+			},
+
+			loadTokenFromLocalStorage: () => {
+				const token = localStorage.getItem("token");
+				if (token) {
+					setStore({ token: token });
+					// Opcional: se puede realizar una petición para obtener la info del usuario o decodificar el token
 				}
 			},
 
@@ -231,10 +247,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error registering user", error);
 					throw error;
 				}
-			},
-
-			logoutUser: () => {
-				setStore({ user: null, token: null });
 			},
 
 			addToCart: (product, quantity = 1) => {

@@ -156,8 +156,8 @@
 /* Responsive styles for mobile devices */
 @media (max-width: 768px) {
   .header {
-    padding-right: 0;
-    padding-left: 0;
+    padding-right: 40px;
+    padding-left: 20px;
   }
   
   .mobile-menu-icon {
