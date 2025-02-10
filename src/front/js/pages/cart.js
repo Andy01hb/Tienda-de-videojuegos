@@ -8,14 +8,26 @@ const Cart = () => {
   const cartItems = store.cartItems;
   const [coupon, setCoupon] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState(null);
+  const [couponError, setCouponError] = useState("");
+  // Estado para animar la eliminación (fade-out) de filas
+  const [removingItems, setRemovingItems] = useState({});
   const navigate = useNavigate();
 
   const updateQuantity = (id, newQuantity) => {
     actions.updateCartItem(id, newQuantity);
   };
 
+  // Al hacer clic en "Eliminar", se marca la fila para animación y luego se remueve
   const removeItem = (id) => {
-    actions.removeFromCart(id);
+    setRemovingItems((prev) => ({ ...prev, [id]: true }));
+    setTimeout(() => {
+      actions.removeFromCart(id);
+      setRemovingItems((prev) => {
+        const newState = { ...prev };
+        delete newState[id];
+        return newState;
+      });
+    }, 300); // Duración de la animación en ms
   };
 
   const subtotal = cartItems.reduce(
@@ -28,8 +40,9 @@ const Cart = () => {
   const applyCoupon = () => {
     if (coupon === "SAVE10") {
       setAppliedCoupon("SAVE10");
+      setCouponError("");
     } else {
-      alert("Código de cupón inválido");
+      setCouponError("Código de cupón inválido");
       setAppliedCoupon(null);
     }
   };
@@ -60,10 +73,15 @@ const Cart = () => {
               </thead>
               <tbody>
                 {cartItems.map((item) => (
-                  <tr key={item.id}>
+                  <tr
+                    key={item.id}
+                    className={removingItems[item.id] ? "fade-out" : ""}
+                  >
                     <td>
                       <img
-                        src={item.image_url || item.imageUrl || "https://via.placeholder.com/150"}
+                        src={
+                          item.image_url || item.imageUrl || "https://via.placeholder.com/150"
+                        }
                         alt={item.title}
                       />
                       <span>{item.title}</span>
@@ -74,7 +92,9 @@ const Cart = () => {
                         type="number"
                         value={item.quantity}
                         min="1"
-                        onChange={(e) => updateQuantity(item.id, parseInt(e.target.value))}
+                        onChange={(e) =>
+                          updateQuantity(item.id, parseInt(e.target.value))
+                        }
                       />
                     </td>
                     <td>${(item.price * item.quantity).toFixed(2)}</td>
@@ -98,6 +118,7 @@ const Cart = () => {
                   Cupón aplicado: {appliedCoupon}
                 </p>
               )}
+              {couponError && <p className="coupon-error">{couponError}</p>}
             </div>
             <div className="summary">
               <p>Subtotal: ${subtotal.toFixed(2)}</p>
